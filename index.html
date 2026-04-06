@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Principal - Campeão de Segurança</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #11326a 0%, #08142b 45%, #06101f 100%);
+      color: #fff;
+    }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 24px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255,208,75,.18), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 45px rgba(0,0,0,.30);
+      padding: 30px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 26px; align-items: center; }
+    .eyebrow {
+      display: inline-block; padding: 8px 14px; border-radius: 999px;
+      background: rgba(255,211,77,.15); color: #ffe08a; font-weight: 700;
+      letter-spacing: .04em; font-size: 12px; text-transform: uppercase;
+    }
+    h1 { margin: 14px 0 10px; font-size: 50px; line-height: 1.02; }
+    .hero p { margin: 0; font-size: 18px; line-height: 1.55; color: #dbe7ff; max-width: 700px; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; min-width: 180px;
+      padding: 14px 18px; border-radius: 16px; text-decoration: none; font-weight: 700;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .btn.primary { background: #ffd34d; color: #15233b; }
+    .btn.ghost { background: rgba(255,255,255,.06); color: #fff; }
+    .mascot-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 26px; padding: 16px; text-align: center; min-height: 320px;
+      display: flex; align-items: center; justify-content: center; color: #d8e6ff;
+    }
+    .mascot-card img { max-width: 100%; max-height: 520px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,.35)); border-radius: 18px; }
+    .stats-grid {
+      margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px; padding: 14px; text-align: center;
+    }
+    .stat-box strong { display: block; font-size: 28px; color: #ffd34d; margin-bottom: 5px; }
+    .section { margin-top: 22px; display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+    .panel, .side {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 24px; padding: 22px; box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .panel h2, .side h2 { margin: 0 0 12px; font-size: 28px; }
+    .subtitle { color: #cdd9f2; margin-bottom: 18px; line-height: 1.5; }
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .game-card {
+      border-radius: 22px; padding: 18px; background: linear-gradient(180deg, rgba(11,34,68,.92), rgba(15,25,48,.92));
+      border: 1px solid rgba(255,255,255,.1); position: relative; overflow: hidden;
+    }
+    .status {
+      display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px;
+    }
+    .open { background: rgba(76,175,80,.18); color: #b5f1bc; }
+    .soon { background: rgba(255,211,77,.15); color: #ffe08a; }
+    .locked { background: rgba(255,255,255,.08); color: #d4ddf3; }
+    .day { font-size: 13px; color: #9fb5df; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .game-card h3 { margin: 0 0 8px; font-size: 24px; }
+    .game-card p { margin: 0 0 16px; color: #d5e1fb; line-height: 1.5; min-height: 72px; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
+    .badge {
+      background: rgba(255,211,77,.12); border: 1px solid rgba(255,211,77,.22); color: #ffe39b;
+      border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .link-btn {
+      display: inline-flex; align-items: center; justify-content: center; padding: 12px 14px;
+      border-radius: 14px; text-decoration: none; font-weight: 700; min-width: 140px;
+    }
+    .link-btn.play { background: #ffd34d; color: #15233b; }
+    .link-btn.wait { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.12); }
+    .rules, .ranking { display: grid; gap: 12px; margin-top: 14px; }
+    .rule, .rank-item {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px; padding: 14px; line-height: 1.45; color: #dbe7ff;
+    }
+    .highlight {
+      margin-top: 16px; background: rgba(255,211,77,.12); border: 1px solid rgba(255,211,77,.24);
+      border-radius: 18px; padding: 16px; color: #ffe7a2; line-height: 1.5;
+    }
+    .rank-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .rank-left small { color: #aabedf; display: block; margin-top: 4px; }
+    .points { font-weight: 700; color: #ffd34d; }
+    .footer { margin-top: 20px; text-align: center; color: #c7d4ee; font-size: 14px; }
+    .admin-box {
+      margin-top: 20px; background: rgba(15,35,71,.9); border: 1px dashed rgba(255,255,255,.18);
+      border-radius: 20px; padding: 18px;
+    }
+    .admin-box h3 { margin-top: 0; }
+    code { background: rgba(255,255,255,.08); padding: 3px 6px; border-radius: 8px; }
+    @media (max-width: 980px) {
+      .hero-grid, .section { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      h1 { font-size: 40px; }
+    }
+    @media (max-width: 720px) {
+      .cards { grid-template-columns: 1fr; }
+      .wrap { padding: 16px; }
+      h1 { font-size: 32px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Programa Campeão de Segurança</span>
+          <h1>Painel Principal<br>dos Campeões de Segurança</h1>
+          <p>
+            Os mascotes da Renaux são a alma desta campanha. Eles conduzem cada missão do programa e ajudam a reforçar medidas preventivas, percepção de risco, comportamento seguro, abertura de OPA, participação no DDS e uso correto de EPI.
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#atividades">Entrar nas atividades</a>
+            <a class="btn ghost" href="#ranking">Ver ranking</a>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-box"><strong>1</strong>Link principal</div>
+            <div class="stat-box"><strong>4+</strong>Atividades</div>
+            <div class="stat-box"><strong>3</strong>Medalhas</div>
+            <div class="stat-box"><strong>100%</strong>Foco em prevenção</div>
+          </div>
+        </div>
+        <div class="mascot-card">
+          <img src="mascotes-campeao.png" alt="Mascotes da campanha Campeão de Segurança" onerror="this.style.display='none'; this.parentNode.innerHTML='Adicione aqui a imagem principal dos mascotes com o nome mascotes-campeao.png';">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="atividades">
+      <div class="panel">
+        <h2>Missões da campanha</h2>
+        <div class="subtitle">
+          Aqui você concentra todas as atividades em um único link. O colaborador entra sempre pelo mesmo painel, e você decide quando cada jogo será liberado.
+        </div>
+
+        <div class="cards">
+          <article class="game-card">
+            <span class="status open">Liberado</span>
+            <div class="day">Dia 1</div>
+            <h3>Quiz da Segurança</h3>
+            <p>Desafio de perguntas e respostas sobre prevenção, riscos, medidas preventivas e comportamento seguro.</p>
+            <div class="badges">
+              <span class="badge">Pontuação</span>
+              <span class="badge">Medalha</span>
+              <span class="badge">Ranking</span>
+            </div>
+            <div class="actions">
+              <a class="link-btn play" href="quiz/index.html">Acessar jogo</a>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <span class="status soon">Próxima liberação</span>
+            <div class="day">Dia 2</div>
+            <h3>Jogo da Memória</h3>
+            <p>Encontre os pares da prevenção e fortaleça os conceitos principais da campanha Campeão de Segurança.</p>
+            <div class="badges">
+              <span class="badge">Memória</span>
+              <span class="badge">Conceitos</span>
+              <span class="badge">Tempo</span>
+            </div>
+            <div class="actions">
+              <a class="link-btn wait" href="memoria/index.html">Preparado para liberar</a>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <span class="status locked">Bloqueado</span>
+            <div class="day">Dia 3</div>
+            <h3>Caça-Palavras</h3>
+            <p>Procure as palavras-chave da segurança e reforce a linguagem preventiva da operação.</p>
+            <div class="badges">
+              <span class="badge">Vocabulário</span>
+              <span class="badge">Segurança</span>
+              <span class="badge">Atenção</span>
+            </div>
+            <div class="actions">
+              <span class="link-btn wait">Disponível em breve</span>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <span class="status locked">Bloqueado</span>
+            <div class="day">Dia 4</div>
+            <h3>Verdadeiro ou Falso</h3>
+            <p>Atividade rápida para reforçar regras, medidas preventivas, uso de EPI e boas práticas.</p>
+            <div class="badges">
+              <span class="badge">Regras</span>
+              <span class="badge">EPI</span>
+              <span class="badge">DDS</span>
+            </div>
+            <div class="actions">
+              <span class="link-btn wait">Disponível em breve</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="admin-box">
+          <h3>Modo admin — como liberar um novo dia</h3>
+          <p><strong>1.</strong> Publique o jogo na pasta correta, por exemplo <code>quiz/index.html</code>, <code>memoria/index.html</code> ou <code>caca-palavras/index.html</code>.</p>
+          <p><strong>2.</strong> Troque o status do card de <code>Bloqueado</code> para <code>Liberado</code> ou <code>Próxima liberação</code>.</p>
+          <p><strong>3.</strong> Troque o botão cinza por um botão de acesso usando o link do jogo daquele dia.</p>
+        </div>
+      </div>
+
+      <aside class="side">
+        <h2>Regras da campanha</h2>
+        <div class="rules">
+          <div class="rule"><strong>1.</strong> O foco principal da campanha é fortalecer medidas preventivas e o comportamento seguro.</div>
+          <div class="rule"><strong>2.</strong> As atividades serão liberadas ao longo dos dias pelo mesmo painel principal.</div>
+          <div class="rule"><strong>3.</strong> A participação individual poderá compor a pontuação da campanha.</div>
+          <div class="rule"><strong>4.</strong> Os mascotes da Renaux são parte primordial dos Campeões de Segurança e aparecem como guias oficiais do programa.</div>
+        </div>
+
+        <div class="highlight">
+          <strong>Mensagem oficial:</strong><br>
+          Segurança não é sorte. É atitude. Quem previne, protege vidas e fortalece a cultura da segurança.
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="ranking">
+      <div class="panel">
+        <h2>Ranking visual da campanha</h2>
+        <div class="subtitle">
+          Atualize este espaço com os participantes que mais se destacarem ao longo dos desafios.
+        </div>
+        <div class="ranking">
+          <div class="rank-item">
+            <div class="rank-left"><strong>1º lugar — Participante 01</strong><small>Turno A • Medalha Ouro</small></div>
+            <div class="points">95 pontos</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-left"><strong>2º lugar — Participante 02</strong><small>Turno B • Medalha Prata</small></div>
+            <div class="points">88 pontos</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-left"><strong>3º lugar — Participante 03</strong><small>Turno C • Medalha Bronze</small></div>
+            <div class="points">80 pontos</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <h2>Destaques do painel</h2>
+        <div class="rules">
+          <div class="rule"><strong>Um link só:</strong> você divulga apenas o painel principal da campanha.</div>
+          <div class="rule"><strong>Liberar por dia:</strong> você decide manualmente qual atividade entra no ar.</div>
+          <div class="rule"><strong>Mascotes em evidência:</strong> os personagens ficam no topo como identidade oficial do programa.</div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="footer">
+      Painel principal da campanha Campeão de Segurança • Renaux
+    </div>
+  </div>
+</body>
+</html>
