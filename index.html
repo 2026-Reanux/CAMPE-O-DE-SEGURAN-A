@@ -285,6 +285,53 @@
       font-size:18px;
       margin-bottom:8px;
     }
+    .mascot-hero-img{
+      animation: floatMascot 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 18px rgba(14,165,233,.22));
+    }
+    .game-shell{
+      position:relative;
+      overflow:hidden;
+    }
+    .game-shell::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right, rgba(14,165,233,.08), transparent 35%),
+                 radial-gradient(circle at bottom left, rgba(34,197,94,.08), transparent 30%);
+      pointer-events:none;
+    }
+    .glow-title{
+      text-shadow:0 0 10px rgba(14,165,233,.18);
+    }
+    .activity-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#dbeafe;
+      color:#0f172a;
+      border:1px solid #93c5fd;
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      margin-bottom:12px;
+    }
+    .hero-character{
+      text-align:center;
+      margin-bottom:16px;
+    }
+    .hero-character img{
+      max-width:320px;
+      width:100%;
+      height:auto;
+    }
+    @keyframes floatMascot {
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
 
     @media (max-width: 720px){
       .mascot-panel{grid-template-columns:1fr}
@@ -298,15 +345,11 @@
   </style>
 </head>
 <body>
- <header class="hero">
-
-<div style="text-align:center; margin-bottom: 20px;">
-  <img src="mascotes-campeao.png" 
-       alt="Guardiões da Segurança Renaux" 
-       style="max-width: 400px; width: 100%; height: auto;">
-</div>
-
-<div class="wrap hero-grid">
+  <header class="hero">
+    <div class="hero-character">
+      <img class="mascot-hero-img" src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+    </div>
+    <div class="wrap hero-grid">
       <div>
         <div class="badge">Programa Campeão de Segurança • Acesso integral liberado</div>
         <h1>Painel Principal dos Campeões de Segurança</h1>
@@ -371,19 +414,20 @@
         </article>
       </section>
 
-      <section id="quiz" class="module active">
+      <section id="quiz" class="module active game-shell">
         <div class="module-head">
           <div>
-            <h2>Quiz da Segurança</h2>
+            <div class="activity-pill">Modo jogo • Quiz</div>
+            <h2 class="glow-title">Quiz da Segurança</h2>
             <p>Responda as perguntas e acompanhe sua pontuação.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
         <div class="mascot-panel">
-          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <img id="mascot-image" class="mascot-hero-img" src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
           <div class="speech">
-            <strong>Latito recomenda:</strong>
-            Antes de responder, pense como um verdadeiro campeão da segurança: observe o risco, escolha a atitude segura e só então avance.
+            <strong id="mascot-title">Latito recomenda:</strong>
+            <span id="mascot-message">Antes de responder, pense como um verdadeiro campeão da segurança: observe o risco, escolha a atitude segura e só então avance.</span>
           </div>
         </div>
         <div class="score" id="quiz-score">Pontuação: 0</div>
@@ -391,16 +435,17 @@
         <div class="answers" id="quiz-answers"></div>
       </section>
 
-      <section id="memoria" class="module">
+      <section id="memoria" class="module game-shell">
         <div class="module-head">
           <div>
-            <h2>Jogo da Memória</h2>
+            <div class="activity-pill">Modo jogo • Memória</div>
+            <h2 class="glow-title">Jogo da Memória</h2>
             <p>Encontre os pares relacionados à prevenção.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
         <div class="mascot-panel">
-          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <img class="mascot-hero-img" src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
           <div class="speech">
             <strong>Kadu avisa:</strong>
             Segurança também se fortalece pela memória. Encontre os pares e fixe os conceitos que ajudam a prevenir acidentes no dia a dia.
@@ -410,16 +455,17 @@
         <div class="memory-grid" id="memory-grid"></div>
       </section>
 
-      <section id="caca" class="module">
+      <section id="caca" class="module game-shell">
         <div class="module-head">
           <div>
-            <h2>Caça-Palavras</h2>
+            <div class="activity-pill">Modo jogo • Desafio</div>
+            <h2 class="glow-title">Caça-Palavras</h2>
             <p>Selecione as letras na ordem correta para encontrar as palavras da campanha.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
         <div class="mascot-panel">
-          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <img class="mascot-hero-img" src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
           <div class="speech">
             <strong>Renauxito orienta:</strong>
             Cada palavra encontrada representa um valor importante da nossa cultura preventiva. Procure com atenção e jogue com foco.
@@ -433,16 +479,17 @@
         </div>
       </section>
 
-      <section id="vf" class="module">
+      <section id="vf" class="module game-shell">
         <div class="module-head">
           <div>
-            <h2>Verdadeiro ou Falso</h2>
+            <div class="activity-pill">Modo jogo • Resposta rápida</div>
+            <h2 class="glow-title">Verdadeiro ou Falso</h2>
             <p>Leia cada afirmação e escolha a opção correta.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
         <div class="mascot-panel">
-          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <img class="mascot-hero-img" src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
           <div class="speech">
             <strong>Os Guardiões da Segurança lembram:</strong>
             Na dúvida, escolha sempre a conduta mais segura. Prevenção começa na decisão certa, mesmo nas atividades mais simples.
@@ -462,9 +509,35 @@
 
   <script>
     const modules = ['quiz','memoria','caca','vf'];
+    const mascotLines = {
+      quiz: {
+        title: 'Latito recomenda:',
+        message: 'Antes de responder, pense como um verdadeiro campeão da segurança: observe o risco, escolha a atitude segura e só então avance.'
+      },
+      memoria: {
+        title: 'Kadu avisa:',
+        message: 'Segurança também se fortalece pela memória. Encontre os pares e fixe os conceitos que ajudam a prevenir acidentes no dia a dia.'
+      },
+      caca: {
+        title: 'Renauxito orienta:',
+        message: 'Cada palavra encontrada representa um valor importante da nossa cultura preventiva. Procure com atenção e jogue com foco.'
+      },
+      vf: {
+        title: 'Os Guardiões da Segurança lembram:',
+        message: 'Na dúvida, escolha sempre a conduta mais segura. Prevenção começa na decisão certa, mesmo nas atividades mais simples.'
+      }
+    };
+    function updateMascotSpeech(id){
+      const title = document.getElementById('mascot-title');
+      const message = document.getElementById('mascot-message');
+      if(!title || !message || !mascotLines[id]) return;
+      title.textContent = mascotLines[id].title;
+      message.textContent = mascotLines[id].message;
+    }
     function openModule(id){
       modules.forEach(m => document.getElementById(m).classList.remove('active'));
       document.getElementById(id).classList.add('active');
+      updateMascotSpeech(id);
       document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
     }
     function closeModules(){
