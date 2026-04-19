@@ -255,6 +255,41 @@
 
     .muted{color:var(--muted)}
 
+    .mascot-panel{
+      display:grid;
+      grid-template-columns:180px 1fr;
+      gap:18px;
+      align-items:center;
+      background:linear-gradient(135deg,#eff6ff,#ecfeff);
+      border:1px solid #bfdbfe;
+      border-radius:24px;
+      padding:18px;
+      margin:18px 0 22px;
+    }
+    .mascot-panel img{
+      width:100%;
+      max-width:180px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+    }
+    .speech{
+      background:#fff;
+      border:1px solid #dbeafe;
+      border-radius:20px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+    }
+    .speech strong{
+      display:block;
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    @media (max-width: 720px){
+      .mascot-panel{grid-template-columns:1fr}
+    }
+
     @media (max-width: 960px){
       .hero-grid,.cards{grid-template-columns:1fr}
       .word-search-board{grid-template-columns:repeat(10, minmax(28px, 1fr))}
@@ -337,6 +372,13 @@
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
+        <div class="mascot-panel">
+          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <div class="speech">
+            <strong>Latito recomenda:</strong>
+            Antes de responder, pense como um verdadeiro campeão da segurança: observe o risco, escolha a atitude segura e só então avance.
+          </div>
+        </div>
         <div class="score" id="quiz-score">Pontuação: 0</div>
         <div class="question" id="quiz-question"></div>
         <div class="answers" id="quiz-answers"></div>
@@ -350,6 +392,13 @@
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
         </div>
+        <div class="mascot-panel">
+          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <div class="speech">
+            <strong>Kadu avisa:</strong>
+            Segurança também se fortalece pela memória. Encontre os pares e fixe os conceitos que ajudam a prevenir acidentes no dia a dia.
+          </div>
+        </div>
         <div class="score" id="memory-status">Pares encontrados: 0 de 6</div>
         <div class="memory-grid" id="memory-grid"></div>
       </section>
@@ -361,6 +410,13 @@
             <p>Selecione as letras na ordem correta para encontrar as palavras da campanha.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="mascot-panel">
+          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <div class="speech">
+            <strong>Renauxito orienta:</strong>
+            Cada palavra encontrada representa um valor importante da nossa cultura preventiva. Procure com atenção e jogue com foco.
+          </div>
         </div>
         <div class="chips" id="word-list"></div>
         <div class="word-search-board" id="board"></div>
@@ -377,6 +433,13 @@
             <p>Leia cada afirmação e escolha a opção correta.</p>
           </div>
           <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="mascot-panel">
+          <img src="mascotes-campeao.png" alt="Guardiões da Segurança Renaux">
+          <div class="speech">
+            <strong>Os Guardiões da Segurança lembram:</strong>
+            Na dúvida, escolha sempre a conduta mais segura. Prevenção começa na decisão certa, mesmo nas atividades mais simples.
+          </div>
         </div>
         <div class="score" id="tf-score">Acertos: 0</div>
         <div class="tf-list" id="tf-list"></div>
