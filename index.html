@@ -667,9 +667,33 @@
     ];
     let quizIndex = 0;
     let quizScore = 0;
-    let ranking = [];
+    let ranking = JSON.parse(localStorage.getItem('rankingRenaux')) || [];
 
     function salvarPontuacao(pontos){
+      const nomeInput = document.getElementById('player-name');
+      const nome = nomeInput && nomeInput.value.trim() ? nomeInput.value.trim() : 'Sem nome';
+
+      ranking.push({ nome, pontos });
+
+      ranking.sort((a,b) => b.pontos - a.pontos);
+
+      ranking = ranking.slice(0, 10);
+
+      // 🔥 SALVAR NO NAVEGADOR
+      localStorage.setItem('rankingRenaux', JSON.stringify(ranking));
+
+      atualizarRanking();
+    }
+
+    // 🔄 FUNÇÃO PARA LIMPAR RANKING (opcional)
+    function limparRanking(){
+      localStorage.removeItem('rankingRenaux');
+      ranking = [];
+      atualizarRanking();
+    }
+
+    // 👇 versão antiga abaixo (substituída)
+    /*
       const nomeInput = document.getElementById('player-name');
       const nome = nomeInput && nomeInput.value.trim() ? nomeInput.value.trim() : 'Sem nome';
       ranking.push({ nome, pontos });
@@ -944,4 +968,3 @@
   </script>
 </body>
 </html>
-
