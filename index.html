@@ -556,7 +556,24 @@
         message: 'Na dúvida, escolha sempre a conduta mais segura. Prevenção começa na decisão certa, mesmo nas atividades mais simples.'
       }
     };
-    function updateMascotSpeech(id){
+  function updateMascotSpeech(id){
+  const title = document.getElementById('mascot-title');
+  const message = document.getElementById('mascot-message');
+
+  if(!title || !message || !mascotLines[id]) return;
+
+  // efeito de troca animada
+  title.style.opacity = 0;
+  message.style.opacity = 0;
+
+  setTimeout(() => {
+    title.textContent = mascotLines[id].title;
+    message.textContent = mascotLines[id].message;
+
+    title.style.opacity = 1;
+    message.style.opacity = 1;
+  }, 200);
+}
       const title = document.getElementById('mascot-title');
       const message = document.getElementById('mascot-message');
       if(!title || !message || !mascotLines[id]) return;
