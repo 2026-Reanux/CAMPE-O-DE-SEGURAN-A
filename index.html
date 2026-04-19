@@ -13,6 +13,29 @@
 
 /* 👇 COLE AQUI 👇 */
 
+.correct-effect {
+  animation: acerto 0.4s ease;
+}
+
+@keyframes acerto {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); background: #22c55e; color:white; }
+  100% { transform: scale(1); }
+}
+
+.wrong-effect {
+  animation: erro 0.4s ease;
+}
+
+@keyframes erro {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); background:#ef4444; color:white; }
+  100% { transform: translateX(0); }
+}
+
+/* 👇 COLE AQUI 👇 */
+
 .fade-in {
   animation: fadeInGame 0.6s ease;
 }
@@ -628,10 +651,12 @@
         if(i === item.correct) b.classList.add('correct');
         if(i === index && i !== item.correct) b.classList.add('wrong');
       });
-      if(index === item.correct) quizScore += 10;
-      document.getElementById('quiz-score').textContent = `Pontuação: ${quizScore}`;
-      setTimeout(() => { quizIndex += 1; renderQuiz(); }, 800);
-    }
+     if(index === item.correct){
+  quizScore += 10;
+  button.classList.add('correct-effect');
+} else {
+  button.classList.add('wrong-effect');
+}
     function restartQuiz(){ quizIndex = 0; quizScore = 0; renderQuiz(); }
 
     // MEMORY
