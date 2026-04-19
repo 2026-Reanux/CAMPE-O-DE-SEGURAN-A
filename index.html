@@ -3,276 +3,612 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel Principal - Campeão de Segurança</title>
+  <title>Campeão de Segurança | Painel Liberado</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #11326a 0%, #08142b 45%, #06101f 100%);
-      color: #fff;
+    :root{
+      --bg:#0f172a;
+      --bg2:#111827;
+      --card:#ffffff;
+      --soft:#f3f4f6;
+      --text:#0f172a;
+      --muted:#64748b;
+      --brand:#0ea5e9;
+      --brand2:#22c55e;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --radius:22px;
+      --shadow:0 12px 30px rgba(15,23,42,.12);
     }
-    .wrap { max-width: 1240px; margin: 0 auto; padding: 24px; }
-    .hero {
-      position: relative;
-      overflow: hidden;
-      border-radius: 30px;
-      background: linear-gradient(135deg, rgba(255,208,75,.18), rgba(255,255,255,.05));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 20px 45px rgba(0,0,0,.30);
-      padding: 30px;
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#e0f2fe 0%, #f8fafc 40%, #eef2ff 100%);
+      color:var(--text);
     }
-    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 26px; align-items: center; }
-    .eyebrow {
-      display: inline-block; padding: 8px 14px; border-radius: 999px;
-      background: rgba(255,211,77,.15); color: #ffe08a; font-weight: 700;
-      letter-spacing: .04em; font-size: 12px; text-transform: uppercase;
+
+    .hero{
+      background:linear-gradient(135deg,var(--bg),#1e293b 60%, #0f766e);
+      color:#fff;
+      padding:48px 20px 36px;
     }
-    h1 { margin: 14px 0 10px; font-size: 50px; line-height: 1.02; }
-    .hero p { margin: 0; font-size: 18px; line-height: 1.55; color: #dbe7ff; max-width: 700px; }
-    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; min-width: 180px;
-      padding: 14px 18px; border-radius: 16px; text-decoration: none; font-weight: 700;
-      border: 1px solid rgba(255,255,255,.1);
+
+    .wrap{max-width:1200px;margin:0 auto}
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:24px;
+      align-items:center;
     }
-    .btn.primary { background: #ffd34d; color: #15233b; }
-    .btn.ghost { background: rgba(255,255,255,.06); color: #fff; }
-    .mascot-card {
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
-      border-radius: 26px; padding: 16px; text-align: center; min-height: 320px;
-      display: flex; align-items: center; justify-content: center; color: #d8e6ff;
+
+    h1{font-size:clamp(30px,5vw,54px);line-height:1.05;margin:0 0 14px}
+    .subtitle{font-size:18px;line-height:1.6;opacity:.95;max-width:760px}
+
+    .hero-badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .badge{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
     }
-    .mascot-card img { max-width: 100%; max-height: 520px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,.35)); border-radius: 18px; }
-    .stats-grid {
-      margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+
+    .hero-box{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
     }
-    .stat-box {
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10);
-      border-radius: 18px; padding: 14px; text-align: center;
+
+    .hero-box h2{margin:0 0 10px;font-size:22px}
+    .hero-box p{margin:0 0 16px;line-height:1.5;color:#e2e8f0}
+
+    .btn-row{display:flex;flex-wrap:wrap;gap:12px}
+    button, .link-btn{
+      border:none;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
-    .stat-box strong { display: block; font-size: 28px; color: #ffd34d; margin-bottom: 5px; }
-    .section { margin-top: 22px; display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
-    .panel, .side {
-      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 24px; padding: 22px; box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    button:hover,.link-btn:hover{transform:translateY(-1px)}
+    .primary{background:#fff;color:#0f172a}
+    .secondary{background:#22c55e;color:#062b16}
+    .ghost{background:#e2e8f0;color:#0f172a}
+    .danger{background:var(--danger);color:#fff}
+
+    main{padding:28px 20px 48px}
+
+    .notice{
+      background:#ecfeff;
+      border:1px solid #a5f3fc;
+      color:#0f172a;
+      padding:16px 18px;
+      border-radius:18px;
+      margin-bottom:22px;
+      font-weight:700;
     }
-    .panel h2, .side h2 { margin: 0 0 12px; font-size: 28px; }
-    .subtitle { color: #cdd9f2; margin-bottom: 18px; line-height: 1.5; }
-    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .game-card {
-      border-radius: 22px; padding: 18px; background: linear-gradient(180deg, rgba(11,34,68,.92), rgba(15,25,48,.92));
-      border: 1px solid rgba(255,255,255,.1); position: relative; overflow: hidden;
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      margin-bottom:26px;
     }
-    .status {
-      display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px;
-      font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px;
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+      border:1px solid #e5e7eb;
     }
-    .open { background: rgba(76,175,80,.18); color: #b5f1bc; }
-    .soon { background: rgba(255,211,77,.15); color: #ffe08a; }
-    .locked { background: rgba(255,255,255,.08); color: #d4ddf3; }
-    .day { font-size: 13px; color: #9fb5df; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
-    .game-card h3 { margin: 0 0 8px; font-size: 24px; }
-    .game-card p { margin: 0 0 16px; color: #d5e1fb; line-height: 1.5; min-height: 72px; }
-    .badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
-    .badge {
-      background: rgba(255,211,77,.12); border: 1px solid rgba(255,211,77,.22); color: #ffe39b;
-      border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700;
+
+    .status{
+      display:inline-block;
+      background:#dcfce7;
+      color:#166534;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.4px;
+      padding:8px 10px;
+      border-radius:999px;
+      margin-bottom:14px;
+      text-transform:uppercase;
     }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
-    .link-btn {
-      display: inline-flex; align-items: center; justify-content: center; padding: 12px 14px;
-      border-radius: 14px; text-decoration: none; font-weight: 700; min-width: 140px;
+
+    .card h3{margin:0 0 8px;font-size:22px}
+    .card p{color:var(--muted);line-height:1.55;min-height:90px}
+    .card small{display:block;color:#475569;margin-bottom:14px;font-weight:700}
+    .card button{width:100%}
+
+    .module{
+      display:none;
+      background:#fff;
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:28px;
+      border:1px solid #e5e7eb;
+      margin-top:16px;
     }
-    .link-btn.play { background: #ffd34d; color: #15233b; }
-    .link-btn.wait { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.12); }
-    .rules, .ranking { display: grid; gap: 12px; margin-top: 14px; }
-    .rule, .rank-item {
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-      border-radius: 18px; padding: 14px; line-height: 1.45; color: #dbe7ff;
+    .module.active{display:block}
+
+    .module-head{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+      margin-bottom:20px;
+      flex-wrap:wrap;
     }
-    .highlight {
-      margin-top: 16px; background: rgba(255,211,77,.12); border: 1px solid rgba(255,211,77,.24);
-      border-radius: 18px; padding: 16px; color: #ffe7a2; line-height: 1.5;
+    .module h2{margin:0;font-size:32px}
+    .module p{line-height:1.6;color:var(--muted)}
+
+    .question{font-size:22px;font-weight:700;margin:18px 0}
+    .answers{display:grid;gap:12px}
+    .answers button{
+      background:#f8fafc;
+      color:#0f172a;
+      border:1px solid #cbd5e1;
+      justify-content:flex-start;
+      text-align:left;
     }
-    .rank-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .rank-left small { color: #aabedf; display: block; margin-top: 4px; }
-    .points { font-weight: 700; color: #ffd34d; }
-    .footer { margin-top: 20px; text-align: center; color: #c7d4ee; font-size: 14px; }
-    .admin-box {
-      margin-top: 20px; background: rgba(15,35,71,.9); border: 1px dashed rgba(255,255,255,.18);
-      border-radius: 20px; padding: 18px;
+    .answers button.correct{background:#dcfce7;border-color:#22c55e}
+    .answers button.wrong{background:#fee2e2;border-color:#ef4444}
+
+    .score{
+      font-weight:800;
+      color:#0f172a;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      padding:12px 14px;
+      border-radius:16px;
+      display:inline-block;
+      margin-bottom:10px;
     }
-    .admin-box h3 { margin-top: 0; }
-    code { background: rgba(255,255,255,.08); padding: 3px 6px; border-radius: 8px; }
-    @media (max-width: 980px) {
-      .hero-grid, .section { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      h1 { font-size: 40px; }
+
+    .memory-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(70px,1fr));
+      gap:12px;
+      max-width:520px;
+      margin-top:18px;
     }
-    @media (max-width: 720px) {
-      .cards { grid-template-columns: 1fr; }
-      .wrap { padding: 16px; }
-      h1 { font-size: 32px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+    .memory-card{
+      aspect-ratio:1/1;
+      border-radius:18px;
+      background:#0ea5e9;
+      color:#fff;
+      border:none;
+      font-size:26px;
+      font-weight:700;
+    }
+    .memory-card.open,.memory-card.matched{background:#fff;color:#0f172a;border:2px solid #0ea5e9}
+    .memory-card.matched{border-color:#22c55e;background:#dcfce7}
+
+    .word-search-board{
+      display:grid;
+      grid-template-columns:repeat(10,36px);
+      gap:6px;
+      justify-content:start;
+      margin:18px 0;
+    }
+    .cell{
+      width:36px;height:36px;
+      border-radius:10px;
+      background:#f1f5f9;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+      border:1px solid #cbd5e1;
+    }
+    .cell.selected{background:#bae6fd;border-color:#0284c7}
+    .cell.found{background:#dcfce7;border-color:#22c55e}
+
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{
+      padding:10px 12px;
+      border-radius:999px;
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      font-weight:700;
+    }
+    .chip.done{background:#dcfce7;border-color:#86efac}
+
+    .tf-list{display:grid;gap:12px;margin-top:18px}
+    .tf-item{
+      border:1px solid #e2e8f0;
+      border-radius:18px;
+      padding:16px;
+      background:#f8fafc;
+    }
+    .tf-text{font-size:18px;font-weight:700;margin-bottom:12px}
+    .tf-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .tf-actions button{min-width:140px}
+
+    .ranking{
+      margin-top:24px;
+      display:grid;
+      gap:12px;
+    }
+    .rank-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:var(--shadow);
+      border:1px solid #e5e7eb;
+      flex-wrap:wrap;
+    }
+
+    .muted{color:var(--muted)}
+
+    @media (max-width: 960px){
+      .hero-grid,.cards{grid-template-columns:1fr}
+      .word-search-board{grid-template-columns:repeat(10, minmax(28px, 1fr))}
+      .cell{width:auto;height:34px}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <span class="eyebrow">Programa Campeão de Segurança</span>
-          <h1>Painel Principal<br>dos Campeões de Segurança</h1>
-          <p>
-            Os mascotes da Renaux são a alma desta campanha. Eles conduzem cada missão do programa e ajudam a reforçar medidas preventivas, percepção de risco, comportamento seguro, abertura de OPA, participação no DDS e uso correto de EPI.
-          </p>
-          <div class="cta">
-            <a class="btn primary" href="#atividades">Entrar nas atividades</a>
-            <a class="btn ghost" href="#ranking">Ver ranking</a>
-          </div>
-          <div class="stats-grid">
-            <div class="stat-box"><strong>1</strong>Link principal</div>
-            <div class="stat-box"><strong>4+</strong>Atividades</div>
-            <div class="stat-box"><strong>3</strong>Medalhas</div>
-            <div class="stat-box"><strong>100%</strong>Foco em prevenção</div>
-          </div>
-        </div>
-        <div class="mascot-card">
-          <img src="mascotes-campeao.png" alt="Mascotes da campanha Campeão de Segurança" onerror="this.style.display='none'; this.parentNode.innerHTML='Adicione aqui a imagem principal dos mascotes com o nome mascotes-campeao.png';">
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="atividades">
-      <div class="panel">
-        <h2>Missões da campanha</h2>
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="badge">Programa Campeão de Segurança • Acesso integral liberado</div>
+        <h1>Painel Principal dos Campeões de Segurança</h1>
         <div class="subtitle">
-          Aqui você concentra todas as atividades em um único link. O colaborador entra sempre pelo mesmo painel, e você decide quando cada jogo será liberado.
+          Todos os módulos estão liberados para acesso imediato. Não há bloqueio por cronograma, por perfil ou por data. O colaborador pode entrar e participar de todas as atividades a partir de agora.
         </div>
-
-        <div class="cards">
-          <article class="game-card">
-            <span class="status open">Liberado</span>
-            <div class="day">Dia 1</div>
-            <h3>Quiz da Segurança</h3>
-            <p>Desafio de perguntas e respostas sobre prevenção, riscos, medidas preventivas e comportamento seguro.</p>
-            <div class="badges">
-              <span class="badge">Pontuação</span>
-              <span class="badge">Medalha</span>
-              <span class="badge">Ranking</span>
-            </div>
-            <div class="actions">
-              <a class="link-btn play" href="quiz/index.html">Acessar jogo</a>
-            </div>
-          </article>
-
-          <article class="game-card">
-            <span class="status soon">Próxima liberação</span>
-            <div class="day">Dia 2</div>
-            <h3>Jogo da Memória</h3>
-            <p>Encontre os pares da prevenção e fortaleça os conceitos principais da campanha Campeão de Segurança.</p>
-            <div class="badges">
-              <span class="badge">Memória</span>
-              <span class="badge">Conceitos</span>
-              <span class="badge">Tempo</span>
-            </div>
-            <div class="actions">
-              <a class="link-btn wait" href="memoria/index.html">Preparado para liberar</a>
-            </div>
-          </article>
-
-          <article class="game-card">
-            <span class="status locked">Bloqueado</span>
-            <div class="day">Dia 3</div>
-            <h3>Caça-Palavras</h3>
-            <p>Procure as palavras-chave da segurança e reforce a linguagem preventiva da operação.</p>
-            <div class="badges">
-              <span class="badge">Vocabulário</span>
-              <span class="badge">Segurança</span>
-              <span class="badge">Atenção</span>
-            </div>
-            <div class="actions">
-              <span class="link-btn wait">Disponível em breve</span>
-            </div>
-          </article>
-
-          <article class="game-card">
-            <span class="status locked">Bloqueado</span>
-            <div class="day">Dia 4</div>
-            <h3>Verdadeiro ou Falso</h3>
-            <p>Atividade rápida para reforçar regras, medidas preventivas, uso de EPI e boas práticas.</p>
-            <div class="badges">
-              <span class="badge">Regras</span>
-              <span class="badge">EPI</span>
-              <span class="badge">DDS</span>
-            </div>
-            <div class="actions">
-              <span class="link-btn wait">Disponível em breve</span>
-            </div>
-          </article>
-        </div>
-
-        <div class="admin-box">
-          <h3>Modo admin — como liberar um novo dia</h3>
-          <p><strong>1.</strong> Publique o jogo na pasta correta, por exemplo <code>quiz/index.html</code>, <code>memoria/index.html</code> ou <code>caca-palavras/index.html</code>.</p>
-          <p><strong>2.</strong> Troque o status do card de <code>Bloqueado</code> para <code>Liberado</code> ou <code>Próxima liberação</code>.</p>
-          <p><strong>3.</strong> Troque o botão cinza por um botão de acesso usando o link do jogo daquele dia.</p>
+        <div class="hero-badges">
+          <span class="badge">4 atividades liberadas</span>
+          <span class="badge">Abertura imediata</span>
+          <span class="badge">Sem travas de dia</span>
+          <span class="badge">Painel único</span>
         </div>
       </div>
-
-      <aside class="side">
-        <h2>Regras da campanha</h2>
-        <div class="rules">
-          <div class="rule"><strong>1.</strong> O foco principal da campanha é fortalecer medidas preventivas e o comportamento seguro.</div>
-          <div class="rule"><strong>2.</strong> As atividades serão liberadas ao longo dos dias pelo mesmo painel principal.</div>
-          <div class="rule"><strong>3.</strong> A participação individual poderá compor a pontuação da campanha.</div>
-          <div class="rule"><strong>4.</strong> Os mascotes da Renaux são parte primordial dos Campeões de Segurança e aparecem como guias oficiais do programa.</div>
-        </div>
-
-        <div class="highlight">
-          <strong>Mensagem oficial:</strong><br>
-          Segurança não é sorte. É atitude. Quem previne, protege vidas e fortalece a cultura da segurança.
-        </div>
-      </aside>
-    </section>
-
-    <section class="section" id="ranking">
-      <div class="panel">
-        <h2>Ranking visual da campanha</h2>
-        <div class="subtitle">
-          Atualize este espaço com os participantes que mais se destacarem ao longo dos desafios.
-        </div>
-        <div class="ranking">
-          <div class="rank-item">
-            <div class="rank-left"><strong>1º lugar — Participante 01</strong><small>Turno A • Medalha Ouro</small></div>
-            <div class="points">95 pontos</div>
-          </div>
-          <div class="rank-item">
-            <div class="rank-left"><strong>2º lugar — Participante 02</strong><small>Turno B • Medalha Prata</small></div>
-            <div class="points">88 pontos</div>
-          </div>
-          <div class="rank-item">
-            <div class="rank-left"><strong>3º lugar — Participante 03</strong><small>Turno C • Medalha Bronze</small></div>
-            <div class="points">80 pontos</div>
-          </div>
+      <div class="hero-box">
+        <h2>Acesso rápido</h2>
+        <p>Use os botões abaixo para abrir qualquer atividade. Como tudo está no mesmo arquivo, não há risco de link quebrado para páginas não publicadas.</p>
+        <div class="btn-row">
+          <button class="primary" onclick="openModule('quiz')">Abrir Quiz</button>
+          <button class="primary" onclick="openModule('memoria')">Abrir Memória</button>
+          <button class="primary" onclick="openModule('caca')">Abrir Caça-Palavras</button>
+          <button class="primary" onclick="openModule('vf')">Abrir Verdadeiro ou Falso</button>
         </div>
       </div>
-
-      <aside class="side">
-        <h2>Destaques do painel</h2>
-        <div class="rules">
-          <div class="rule"><strong>Um link só:</strong> você divulga apenas o painel principal da campanha.</div>
-          <div class="rule"><strong>Liberar por dia:</strong> você decide manualmente qual atividade entra no ar.</div>
-          <div class="rule"><strong>Mascotes em evidência:</strong> os personagens ficam no topo como identidade oficial do programa.</div>
-        </div>
-      </aside>
-    </section>
-
-    <div class="footer">
-      Painel principal da campanha Campeão de Segurança • Renaux
     </div>
-  </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="notice">Status operacional: todos os módulos estão desbloqueados e com gatilho de abertura ativo.</div>
+
+      <section class="cards">
+        <article class="card">
+          <span class="status">Liberado agora</span>
+          <h3>Quiz da Segurança</h3>
+          <p>Desafio de perguntas e respostas sobre prevenção, comportamento seguro, DDS, percepção de risco e uso correto de EPI.</p>
+          <small>Pontuação • Medalha • Ranking</small>
+          <button class="secondary" onclick="openModule('quiz')">Acessar atividade</button>
+        </article>
+
+        <article class="card">
+          <span class="status">Liberado agora</span>
+          <h3>Jogo da Memória</h3>
+          <p>Encontre os pares corretos e reforce os principais conceitos da campanha Campeão de Segurança de forma interativa.</p>
+          <small>Memória • Conceitos • Tempo</small>
+          <button class="secondary" onclick="openModule('memoria')">Acessar atividade</button>
+        </article>
+
+        <article class="card">
+          <span class="status">Liberado agora</span>
+          <h3>Caça-Palavras</h3>
+          <p>Procure as palavras-chave da segurança e consolide a linguagem preventiva usada na rotina operacional.</p>
+          <small>Vocabulário • Atenção • Segurança</small>
+          <button class="secondary" onclick="openModule('caca')">Acessar atividade</button>
+        </article>
+
+        <article class="card">
+          <span class="status">Liberado agora</span>
+          <h3>Verdadeiro ou Falso</h3>
+          <p>Atividade rápida para reforçar regras, boas práticas, medidas preventivas, percepção de risco e uso correto de EPI.</p>
+          <small>Regras • EPI • DDS</small>
+          <button class="secondary" onclick="openModule('vf')">Acessar atividade</button>
+        </article>
+      </section>
+
+      <section id="quiz" class="module active">
+        <div class="module-head">
+          <div>
+            <h2>Quiz da Segurança</h2>
+            <p>Responda as perguntas e acompanhe sua pontuação.</p>
+          </div>
+          <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="score" id="quiz-score">Pontuação: 0</div>
+        <div class="question" id="quiz-question"></div>
+        <div class="answers" id="quiz-answers"></div>
+      </section>
+
+      <section id="memoria" class="module">
+        <div class="module-head">
+          <div>
+            <h2>Jogo da Memória</h2>
+            <p>Encontre os pares relacionados à prevenção.</p>
+          </div>
+          <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="score" id="memory-status">Pares encontrados: 0 de 6</div>
+        <div class="memory-grid" id="memory-grid"></div>
+      </section>
+
+      <section id="caca" class="module">
+        <div class="module-head">
+          <div>
+            <h2>Caça-Palavras</h2>
+            <p>Selecione as letras na ordem correta para encontrar as palavras da campanha.</p>
+          </div>
+          <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="chips" id="word-list"></div>
+        <div class="word-search-board" id="board"></div>
+        <div class="muted" id="word-feedback">Clique nas letras em sequência para formar uma palavra inteira.</div>
+        <div class="btn-row" style="margin-top:14px">
+          <button class="ghost" onclick="clearSelection()">Limpar seleção</button>
+        </div>
+      </section>
+
+      <section id="vf" class="module">
+        <div class="module-head">
+          <div>
+            <h2>Verdadeiro ou Falso</h2>
+            <p>Leia cada afirmação e escolha a opção correta.</p>
+          </div>
+          <button class="ghost" onclick="closeModules()">Fechar atividade</button>
+        </div>
+        <div class="score" id="tf-score">Acertos: 0</div>
+        <div class="tf-list" id="tf-list"></div>
+      </section>
+
+      <section class="ranking">
+        <div class="rank-row"><strong>1º lugar</strong><span>Participante 01 • 95 pontos</span></div>
+        <div class="rank-row"><strong>2º lugar</strong><span>Participante 02 • 88 pontos</span></div>
+        <div class="rank-row"><strong>3º lugar</strong><span>Participante 03 • 80 pontos</span></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const modules = ['quiz','memoria','caca','vf'];
+    function openModule(id){
+      modules.forEach(m => document.getElementById(m).classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    function closeModules(){
+      modules.forEach(m => document.getElementById(m).classList.remove('active'));
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    // QUIZ
+    const quizData = [
+      {q:'O uso correto de EPI deve ocorrer apenas quando o supervisor estiver presente.', a:['Verdadeiro','Falso'], correct:1},
+      {q:'Percepção de risco ajuda a identificar perigos antes que o acidente aconteça.', a:['Verdadeiro','Falso'], correct:0},
+      {q:'DDS é uma ferramenta importante para reforçar orientações de segurança.', a:['Verdadeiro','Falso'], correct:0},
+      {q:'Atalho inseguro pode aumentar a chance de acidente.', a:['Verdadeiro','Falso'], correct:0}
+    ];
+    let quizIndex = 0;
+    let quizScore = 0;
+    function renderQuiz(){
+      const question = document.getElementById('quiz-question');
+      const answers = document.getElementById('quiz-answers');
+      const score = document.getElementById('quiz-score');
+      score.textContent = `Pontuação: ${quizScore}`;
+      if(quizIndex >= quizData.length){
+        question.textContent = 'Quiz finalizado. Parabéns pela participação.';
+        answers.innerHTML = '<button class="secondary" onclick="restartQuiz()">Reiniciar quiz</button>';
+        return;
+      }
+      const item = quizData[quizIndex];
+      question.textContent = item.q;
+      answers.innerHTML = '';
+      item.a.forEach((option, i) => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.onclick = () => answerQuiz(i, btn);
+        answers.appendChild(btn);
+      });
+    }
+    function answerQuiz(index, button){
+      const item = quizData[quizIndex];
+      const all = document.querySelectorAll('#quiz-answers button');
+      all.forEach((b, i) => {
+        b.disabled = true;
+        if(i === item.correct) b.classList.add('correct');
+        if(i === index && i !== item.correct) b.classList.add('wrong');
+      });
+      if(index === item.correct) quizScore += 10;
+      document.getElementById('quiz-score').textContent = `Pontuação: ${quizScore}`;
+      setTimeout(() => { quizIndex += 1; renderQuiz(); }, 800);
+    }
+    function restartQuiz(){ quizIndex = 0; quizScore = 0; renderQuiz(); }
+
+    // MEMORY
+    const memoryItems = ['EPI','EPI','DDS','DDS','OPA','OPA','RISCO','RISCO','APR','APR','LOTO','LOTO'];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let matchedPairs = 0;
+    function shuffle(arr){ return [...arr].sort(() => Math.random() - 0.5); }
+    function initMemory(){
+      matchedPairs = 0;
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+      document.getElementById('memory-status').textContent = 'Pares encontrados: 0 de 6';
+      const grid = document.getElementById('memory-grid');
+      grid.innerHTML = '';
+      shuffle(memoryItems).forEach((text, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'memory-card';
+        btn.dataset.value = text;
+        btn.dataset.index = idx;
+        btn.textContent = '?';
+        btn.onclick = () => flipCard(btn);
+        grid.appendChild(btn);
+      });
+    }
+    function flipCard(card){
+      if(lockBoard || card.classList.contains('matched') || card === firstCard) return;
+      card.classList.add('open');
+      card.textContent = card.dataset.value;
+      if(!firstCard){ firstCard = card; return; }
+      secondCard = card;
+      lockBoard = true;
+      if(firstCard.dataset.value === secondCard.dataset.value){
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        matchedPairs += 1;
+        document.getElementById('memory-status').textContent = `Pares encontrados: ${matchedPairs} de 6`;
+        resetMemoryTurn();
+      } else {
+        setTimeout(() => {
+          [firstCard, secondCard].forEach(c => { c.classList.remove('open'); c.textContent = '?'; });
+          resetMemoryTurn();
+        }, 800);
+      }
+    }
+    function resetMemoryTurn(){ firstCard = null; secondCard = null; lockBoard = false; }
+
+    // WORD SEARCH
+    const boardLetters = [
+      ['E','P','I','R','I','S','C','O','D','S'],
+      ['A','D','D','S','L','O','T','O','Q','E'],
+      ['P','R','E','V','E','N','C','A','O','G'],
+      ['O','P','A','T','U','R','N','O','U','U'],
+      ['C','U','I','D','A','D','O','B','R','R'],
+      ['R','O','T','I','N','A','M','A','I','A'],
+      ['A','P','R','S','A','F','E','T','Y','N'],
+      ['M','E','D','I','D','A','S','X','T','C'],
+      ['R','E','G','R','A','S','Z','Y','O','A'],
+      ['S','I','N','A','L','A','R','T','A','S']
+    ];
+    const validWords = ['EPI','DDS','LOTO','OPA','APR','RISCO'];
+    let currentSelection = [];
+    let foundWords = [];
+    function initBoard(){
+      const board = document.getElementById('board');
+      const wordList = document.getElementById('word-list');
+      board.innerHTML = '';
+      wordList.innerHTML = '';
+      currentSelection = [];
+      foundWords = [];
+      validWords.forEach(word => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.id = `chip-${word}`;
+        chip.textContent = word;
+        wordList.appendChild(chip);
+      });
+      boardLetters.forEach((row, r) => row.forEach((letter, c) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = letter;
+        cell.dataset.letter = letter;
+        cell.onclick = () => selectCell(cell);
+        board.appendChild(cell);
+      }));
+    }
+    function selectCell(cell){
+      if(cell.classList.contains('found')) return;
+      if(cell.classList.contains('selected')){
+        cell.classList.remove('selected');
+        currentSelection = currentSelection.filter(x => x !== cell);
+      } else {
+        cell.classList.add('selected');
+        currentSelection.push(cell);
+      }
+      checkSelectedWord();
+    }
+    function checkSelectedWord(){
+      const word = currentSelection.map(c => c.dataset.letter).join('');
+      if(validWords.includes(word) && !foundWords.includes(word)){
+        foundWords.push(word);
+        currentSelection.forEach(c => { c.classList.remove('selected'); c.classList.add('found'); });
+        document.getElementById(`chip-${word}`).classList.add('done');
+        document.getElementById('word-feedback').textContent = `Boa! Você encontrou a palavra ${word}.`;
+        currentSelection = [];
+        return;
+      }
+      document.getElementById('word-feedback').textContent = word ? `Seleção atual: ${word}` : 'Clique nas letras em sequência para formar uma palavra inteira.';
+    }
+    function clearSelection(){
+      currentSelection.forEach(c => c.classList.remove('selected'));
+      currentSelection = [];
+      document.getElementById('word-feedback').textContent = 'Clique nas letras em sequência para formar uma palavra inteira.';
+    }
+
+    // TRUE OR FALSE
+    const tfData = [
+      {text:'Usar EPI corretamente faz parte do comportamento seguro.', correct:true},
+      {text:'Uma condição insegura deve ser ignorada se a atividade for rápida.', correct:false},
+      {text:'Participar do DDS ajuda a reforçar orientações preventivas.', correct:true},
+      {text:'Atitude preventiva reduz o potencial de acidentes.', correct:true}
+    ];
+    let tfScore = 0;
+    function initTF(){
+      tfScore = 0;
+      document.getElementById('tf-score').textContent = 'Acertos: 0';
+      const list = document.getElementById('tf-list');
+      list.innerHTML = '';
+      tfData.forEach((item, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'tf-item';
+        wrap.innerHTML = `<div class="tf-text">${idx + 1}. ${item.text}</div>`;
+        const actions = document.createElement('div');
+        actions.className = 'tf-actions';
+        const v = document.createElement('button');
+        v.className = 'primary';
+        v.textContent = 'Verdadeiro';
+        const f = document.createElement('button');
+        f.className = 'primary';
+        f.textContent = 'Falso';
+        const feedback = document.createElement('div');
+        feedback.className = 'muted';
+        feedback.style.marginTop = '10px';
+        const submit = (answer) => {
+          if(v.disabled) return;
+          v.disabled = true; f.disabled = true;
+          const hit = answer === item.correct;
+          if(hit){ tfScore += 1; feedback.textContent = 'Resposta correta.'; }
+          else { feedback.textContent = 'Resposta incorreta.'; }
+          document.getElementById('tf-score').textContent = `Acertos: ${tfScore}`;
+        };
+        v.onclick = () => submit(true);
+        f.onclick = () => submit(false);
+        actions.appendChild(v); actions.appendChild(f);
+        wrap.appendChild(actions);
+        wrap.appendChild(feedback);
+        list.appendChild(wrap);
+      });
+    }
+
+    renderQuiz();
+    initMemory();
+    initBoard();
+    initTF();
+  </script>
 </body>
 </html>
