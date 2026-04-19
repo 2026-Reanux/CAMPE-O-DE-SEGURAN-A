@@ -5,55 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campeão de Segurança | Painel Liberado</title>
   <style>
-@keyframes floatMascot {
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-12px) scale(1.03); }
-  100% { transform: translateY(0px) scale(1); }
-}
-
-/* 👇 COLE AQUI 👇 */
-
-.correct-effect {
-  animation: acerto 0.4s ease;
-}
-
-@keyframes acerto {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); background: #22c55e; color:white; }
-  100% { transform: scale(1); }
-}
-
-.wrong-effect {
-  animation: erro 0.4s ease;
-}
-
-@keyframes erro {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); background:#ef4444; color:white; }
-  100% { transform: translateX(0); }
-}
-
-/* 👇 COLE AQUI 👇 */
-
-.fade-in {
-  animation: fadeInGame 0.6s ease;
-}
-
-@keyframes fadeInGame {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 👇 continua o seu código normal */
-
-:root {
+    :root{
       --bg:#0f172a;
       --bg2:#111827;
       --card:#ffffff;
@@ -80,10 +32,21 @@
     .hero{
       background:linear-gradient(135deg,var(--bg),#1e293b 60%, #0f766e);
       color:#fff;
-      padding:48px 20px 36px;
+      padding:40px 20px 36px;
     }
 
     .wrap{max-width:1200px;margin:0 auto}
+
+    .hero-character{
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .hero-character img{
+      max-width:320px;
+      width:100%;
+      height:auto;
+    }
 
     .hero-grid{
       display:grid;
@@ -187,8 +150,18 @@
       padding:28px;
       border:1px solid #e5e7eb;
       margin-top:16px;
+      position:relative;
+      overflow:hidden;
     }
     .module.active{display:block}
+    .module::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at top right, rgba(14,165,233,.08), transparent 35%),
+                 radial-gradient(circle at bottom left, rgba(34,197,94,.08), transparent 30%);
+      pointer-events:none;
+    }
 
     .module-head{
       display:flex;
@@ -197,18 +170,39 @@
       align-items:center;
       margin-bottom:20px;
       flex-wrap:wrap;
+      position:relative;
+      z-index:1;
     }
     .module h2{margin:0;font-size:32px}
     .module p{line-height:1.6;color:var(--muted)}
 
-    .question{font-size:22px;font-weight:700;margin:18px 0}
-    .answers{display:grid;gap:12px}
+    .activity-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#dbeafe;
+      color:#0f172a;
+      border:1px solid #93c5fd;
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      margin-bottom:12px;
+    }
+
+    .glow-title{ text-shadow:0 0 10px rgba(14,165,233,.18); }
+
+    .question{font-size:22px;font-weight:700;margin:18px 0;position:relative;z-index:1}
+    .answers{display:grid;gap:12px;position:relative;z-index:1}
     .answers button{
       background:#f8fafc;
       color:#0f172a;
       border:1px solid #cbd5e1;
       justify-content:flex-start;
       text-align:left;
+      width:100%;
     }
     .answers button.correct{background:#dcfce7;border-color:#22c55e}
     .answers button.wrong{background:#fee2e2;border-color:#ef4444}
@@ -222,6 +216,8 @@
       border-radius:16px;
       display:inline-block;
       margin-bottom:10px;
+      position:relative;
+      z-index:1;
     }
 
     .memory-grid{
@@ -230,6 +226,8 @@
       gap:12px;
       max-width:520px;
       margin-top:18px;
+      position:relative;
+      z-index:1;
     }
     .memory-card{
       aspect-ratio:1/1;
@@ -249,6 +247,8 @@
       gap:6px;
       justify-content:start;
       margin:18px 0;
+      position:relative;
+      z-index:1;
     }
     .cell{
       width:36px;height:36px;
@@ -263,7 +263,7 @@
     .cell.selected{background:#bae6fd;border-color:#0284c7}
     .cell.found{background:#dcfce7;border-color:#22c55e}
 
-    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
     .chip{
       padding:10px 12px;
       border-radius:999px;
@@ -273,7 +273,7 @@
     }
     .chip.done{background:#dcfce7;border-color:#86efac}
 
-    .tf-list{display:grid;gap:12px;margin-top:18px}
+    .tf-list{display:grid;gap:12px;margin-top:18px;position:relative;z-index:1}
     .tf-item{
       border:1px solid #e2e8f0;
       border-radius:18px;
@@ -313,6 +313,8 @@
       border-radius:24px;
       padding:18px;
       margin:18px 0 22px;
+      position:relative;
+      z-index:1;
     }
     .mascot-panel img{
       width:100%;
@@ -327,72 +329,107 @@
       border-radius:20px;
       padding:16px 18px;
       box-shadow:var(--shadow);
+      transition:opacity .2s ease;
     }
     .speech strong{
       display:block;
       font-size:18px;
       margin-bottom:8px;
+      transition:opacity .2s ease;
     }
+
     .mascot-hero-img{
       animation: floatMascot 3s ease-in-out infinite;
       filter: drop-shadow(0 10px 18px rgba(14,165,233,.22));
     }
-    .game-shell{
-      position:relative;
-      overflow:hidden;
-    }
-    .game-shell::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at top right, rgba(14,165,233,.08), transparent 35%),
-                 radial-gradient(circle at bottom left, rgba(34,197,94,.08), transparent 30%);
-      pointer-events:none;
-    }
-    .glow-title{
-      text-shadow:0 0 10px rgba(14,165,233,.18);
-    }
-    .activity-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#dbeafe;
-      color:#0f172a;
-      border:1px solid #93c5fd;
-      font-size:13px;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.3px;
-      margin-bottom:12px;
-    }
-    .hero-character{
-      text-align:center;
-      margin-bottom:16px;
-    }
-    .hero-character img{
-      max-width:320px;
-      width:100%;
-      height:auto;
-    }
+
     @keyframes floatMascot {
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-12px) scale(1.03); }
-  100% { transform: translateY(0px) scale(1); }
-}
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-8px)}
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-12px) scale(1.03); }
+      100% { transform: translateY(0px) scale(1); }
     }
 
-    @media (max-width: 720px){
-      .mascot-panel{grid-template-columns:1fr}
+    .fade-in {
+      animation: fadeInGame 0.6s ease;
     }
+
+    @keyframes fadeInGame {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .correct-effect {
+      animation: acerto 0.4s ease;
+    }
+
+    @keyframes acerto {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); background: #22c55e; color: white; }
+      100% { transform: scale(1); }
+    }
+
+    .wrong-effect {
+      animation: erro 0.4s ease;
+    }
+
+    @keyframes erro {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); background: #ef4444; color: white; }
+      100% { transform: translateX(0); }
+    }
+
+    .player-box{
+      background:#ffffff;
+      border:1px solid #dbeafe;
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+    .player-box label{
+      display:block;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .player-box input{
+      width:100%;
+      max-width:360px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid #cbd5e1;
+      font-size:16px;
+    }
+
+    .final-banner{
+      display:none;
+      margin-top:22px;
+      background:linear-gradient(135deg,#0f172a,#1d4ed8,#0f766e);
+      color:#fff;
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+    .final-banner.show{display:block}
+    .final-banner h3{margin:0 0 10px;font-size:30px}
+    .final-banner p{margin:0;line-height:1.6}
 
     @media (max-width: 960px){
       .hero-grid,.cards{grid-template-columns:1fr}
       .word-search-board{grid-template-columns:repeat(10, minmax(28px, 1fr))}
       .cell{width:auto;height:34px}
+    }
+
+    @media (max-width: 720px){
+      .mascot-panel{grid-template-columns:1fr}
+      .hero{padding:28px 16px 28px}
+      main{padding:20px 16px 36px}
     }
   </style>
 </head>
@@ -432,6 +469,11 @@
     <div class="wrap">
       <div class="notice">Status operacional: todos os módulos estão desbloqueados e com gatilho de abertura ativo.</div>
 
+      <div class="player-box">
+        <label for="player-name">Nome do colaborador para o ranking</label>
+        <input type="text" id="player-name" placeholder="Digite seu nome antes de jogar">
+      </div>
+
       <section class="cards">
         <article class="card">
           <span class="status">Liberado agora</span>
@@ -466,7 +508,7 @@
         </article>
       </section>
 
- <section id="quiz" class="module active game-shell fade-in">
+      <section id="quiz" class="module active fade-in">
         <div class="module-head">
           <div>
             <div class="activity-pill">Modo jogo • Quiz</div>
@@ -485,9 +527,13 @@
         <div class="score" id="quiz-score">Pontuação: 0</div>
         <div class="question" id="quiz-question"></div>
         <div class="answers" id="quiz-answers"></div>
+        <div id="final-banner" class="final-banner">
+          <h3>Você é um Campeão de Segurança!</h3>
+          <p id="final-message">Parabéns pela participação.</p>
+        </div>
       </section>
 
-     <section id="memoria" class="module game-shell fade-in">
+      <section id="memoria" class="module fade-in">
         <div class="module-head">
           <div>
             <div class="activity-pill">Modo jogo • Memória</div>
@@ -507,7 +553,7 @@
         <div class="memory-grid" id="memory-grid"></div>
       </section>
 
-   <section id="vf" class="module game-shell fade-in">
+      <section id="caca" class="module fade-in">
         <div class="module-head">
           <div>
             <div class="activity-pill">Modo jogo • Desafio</div>
@@ -531,7 +577,7 @@
         </div>
       </section>
 
-      <section id="vf" class="module game-shell">
+      <section id="vf" class="module fade-in">
         <div class="module-head">
           <div>
             <div class="activity-pill">Modo jogo • Resposta rápida</div>
@@ -552,9 +598,8 @@
       </section>
 
       <section class="ranking">
-        <div class="rank-row"><strong>1º lugar</strong><span>Participante 01 • 95 pontos</span></div>
-        <div class="rank-row"><strong>2º lugar</strong><span>Participante 02 • 88 pontos</span></div>
-        <div class="rank-row"><strong>3º lugar</strong><span>Participante 03 • 80 pontos</span></div>
+        <div class="rank-row"><strong>Ranking dos colaboradores</strong><span>Atualizado pelo quiz</span></div>
+        <div id="ranking-list"></div>
       </section>
     </div>
   </main>
@@ -579,36 +624,35 @@
         message: 'Na dúvida, escolha sempre a conduta mais segura. Prevenção começa na decisão certa, mesmo nas atividades mais simples.'
       }
     };
-  function updateMascotSpeech(id){
-  const title = document.getElementById('mascot-title');
-  const message = document.getElementById('mascot-message');
 
-  if(!title || !message || !mascotLines[id]) return;
-
-  // efeito de troca animada
-  title.style.opacity = 0;
-  message.style.opacity = 0;
-
-  setTimeout(() => {
-    title.textContent = mascotLines[id].title;
-    message.textContent = mascotLines[id].message;
-
-    title.style.opacity = 1;
-    message.style.opacity = 1;
-  }, 200);
-}
+    function updateMascotSpeech(id){
       const title = document.getElementById('mascot-title');
       const message = document.getElementById('mascot-message');
       if(!title || !message || !mascotLines[id]) return;
-      title.textContent = mascotLines[id].title;
-      message.textContent = mascotLines[id].message;
+      title.style.opacity = 0;
+      message.style.opacity = 0;
+      setTimeout(() => {
+        title.textContent = mascotLines[id].title;
+        message.textContent = mascotLines[id].message;
+        title.style.opacity = 1;
+        message.style.opacity = 1;
+      }, 180);
     }
+
     function openModule(id){
-      modules.forEach(m => document.getElementById(m).classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+      modules.forEach(m => {
+        const el = document.getElementById(m);
+        el.classList.remove('active');
+        el.classList.remove('fade-in');
+      });
+      const current = document.getElementById(id);
+      current.classList.add('active');
+      void current.offsetWidth;
+      current.classList.add('fade-in');
       updateMascotSpeech(id);
-      document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+      current.scrollIntoView({behavior:'smooth', block:'start'});
     }
+
     function closeModules(){
       modules.forEach(m => document.getElementById(m).classList.remove('active'));
       window.scrollTo({top:0, behavior:'smooth'});
@@ -623,16 +667,52 @@
     ];
     let quizIndex = 0;
     let quizScore = 0;
+    let ranking = [];
+
+    function salvarPontuacao(pontos){
+      const nomeInput = document.getElementById('player-name');
+      const nome = nomeInput && nomeInput.value.trim() ? nomeInput.value.trim() : 'Sem nome';
+      ranking.push({ nome, pontos });
+      ranking.sort((a,b) => b.pontos - a.pontos);
+      ranking = ranking.slice(0, 10);
+      atualizarRanking();
+    }
+
+    function atualizarRanking(){
+      const list = document.getElementById('ranking-list');
+      if(!list) return;
+      if(ranking.length === 0){
+        list.innerHTML = '<div class="rank-row"><strong>Sem registros ainda</strong><span>Jogue o quiz para preencher o ranking</span></div>';
+        return;
+      }
+      list.innerHTML = ranking.map((item, i) => `
+        <div class="rank-row">
+          <strong>${i + 1}º lugar</strong>
+          <span>${item.nome} • ${item.pontos} pontos</span>
+        </div>
+      `).join('');
+    }
+
     function renderQuiz(){
       const question = document.getElementById('quiz-question');
       const answers = document.getElementById('quiz-answers');
       const score = document.getElementById('quiz-score');
+      const finalBanner = document.getElementById('final-banner');
       score.textContent = `Pontuação: ${quizScore}`;
+      if(finalBanner) finalBanner.classList.remove('show');
+
       if(quizIndex >= quizData.length){
         question.textContent = 'Quiz finalizado. Parabéns pela participação.';
         answers.innerHTML = '<button class="secondary" onclick="restartQuiz()">Reiniciar quiz</button>';
+        salvarPontuacao(quizScore);
+        if(finalBanner){
+          const finalMessage = document.getElementById('final-message');
+          finalMessage.textContent = `Sua pontuação final foi ${quizScore} pontos. Continue sendo exemplo de prevenção, atenção e comportamento seguro.`;
+          finalBanner.classList.add('show');
+        }
         return;
       }
+
       const item = quizData[quizIndex];
       question.textContent = item.q;
       answers.innerHTML = '';
@@ -643,6 +723,7 @@
         answers.appendChild(btn);
       });
     }
+
     function answerQuiz(index, button){
       const item = quizData[quizIndex];
       const all = document.querySelectorAll('#quiz-answers button');
@@ -651,13 +732,24 @@
         if(i === item.correct) b.classList.add('correct');
         if(i === index && i !== item.correct) b.classList.add('wrong');
       });
-     if(index === item.correct){
-  quizScore += 10;
-  button.classList.add('correct-effect');
-} else {
-  button.classList.add('wrong-effect');
-}
-    function restartQuiz(){ quizIndex = 0; quizScore = 0; renderQuiz(); }
+      if(index === item.correct){
+        quizScore += 10;
+        button.classList.add('correct-effect');
+      } else {
+        button.classList.add('wrong-effect');
+      }
+      document.getElementById('quiz-score').textContent = `Pontuação: ${quizScore}`;
+      setTimeout(() => {
+        quizIndex += 1;
+        renderQuiz();
+      }, 800);
+    }
+
+    function restartQuiz(){
+      quizIndex = 0;
+      quizScore = 0;
+      renderQuiz();
+    }
 
     // MEMORY
     const memoryItems = ['EPI','EPI','DDS','DDS','OPA','OPA','RISCO','RISCO','APR','APR','LOTO','LOTO'];
@@ -665,7 +757,9 @@
     let secondCard = null;
     let lockBoard = false;
     let matchedPairs = 0;
+
     function shuffle(arr){ return [...arr].sort(() => Math.random() - 0.5); }
+
     function initMemory(){
       matchedPairs = 0;
       firstCard = null;
@@ -684,6 +778,7 @@
         grid.appendChild(btn);
       });
     }
+
     function flipCard(card){
       if(lockBoard || card.classList.contains('matched') || card === firstCard) return;
       card.classList.add('open');
@@ -704,7 +799,12 @@
         }, 800);
       }
     }
-    function resetMemoryTurn(){ firstCard = null; secondCard = null; lockBoard = false; }
+
+    function resetMemoryTurn(){
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }
 
     // WORD SEARCH
     const boardLetters = [
@@ -722,6 +822,7 @@
     const validWords = ['EPI','DDS','LOTO','OPA','APR','RISCO'];
     let currentSelection = [];
     let foundWords = [];
+
     function initBoard(){
       const board = document.getElementById('board');
       const wordList = document.getElementById('word-list');
@@ -736,7 +837,7 @@
         chip.textContent = word;
         wordList.appendChild(chip);
       });
-      boardLetters.forEach((row, r) => row.forEach((letter, c) => {
+      boardLetters.forEach(row => row.forEach(letter => {
         const cell = document.createElement('div');
         cell.className = 'cell';
         cell.textContent = letter;
@@ -745,6 +846,7 @@
         board.appendChild(cell);
       }));
     }
+
     function selectCell(cell){
       if(cell.classList.contains('found')) return;
       if(cell.classList.contains('selected')){
@@ -756,18 +858,24 @@
       }
       checkSelectedWord();
     }
+
     function checkSelectedWord(){
       const word = currentSelection.map(c => c.dataset.letter).join('');
       if(validWords.includes(word) && !foundWords.includes(word)){
         foundWords.push(word);
-        currentSelection.forEach(c => { c.classList.remove('selected'); c.classList.add('found'); });
-        document.getElementById(`chip-${word}`).classList.add('done');
+        currentSelection.forEach(c => {
+          c.classList.remove('selected');
+          c.classList.add('found');
+        });
+        const chip = document.getElementById(`chip-${word}`);
+        if(chip) chip.classList.add('done');
         document.getElementById('word-feedback').textContent = `Boa! Você encontrou a palavra ${word}.`;
         currentSelection = [];
         return;
       }
       document.getElementById('word-feedback').textContent = word ? `Seleção atual: ${word}` : 'Clique nas letras em sequência para formar uma palavra inteira.';
     }
+
     function clearSelection(){
       currentSelection.forEach(c => c.classList.remove('selected'));
       currentSelection = [];
@@ -782,6 +890,7 @@
       {text:'Atitude preventiva reduz o potencial de acidentes.', correct:true}
     ];
     let tfScore = 0;
+
     function initTF(){
       tfScore = 0;
       document.getElementById('tf-score').textContent = 'Acertos: 0';
@@ -804,21 +913,30 @@
         feedback.style.marginTop = '10px';
         const submit = (answer) => {
           if(v.disabled) return;
-          v.disabled = true; f.disabled = true;
+          v.disabled = true;
+          f.disabled = true;
           const hit = answer === item.correct;
-          if(hit){ tfScore += 1; feedback.textContent = 'Resposta correta.'; }
-          else { feedback.textContent = 'Resposta incorreta.'; }
+          if(hit){
+            tfScore += 1;
+            feedback.textContent = 'Resposta correta.';
+            (answer ? v : f).classList.add('correct-effect');
+          } else {
+            feedback.textContent = 'Resposta incorreta.';
+            (answer ? v : f).classList.add('wrong-effect');
+          }
           document.getElementById('tf-score').textContent = `Acertos: ${tfScore}`;
         };
         v.onclick = () => submit(true);
         f.onclick = () => submit(false);
-        actions.appendChild(v); actions.appendChild(f);
+        actions.appendChild(v);
+        actions.appendChild(f);
         wrap.appendChild(actions);
         wrap.appendChild(feedback);
         list.appendChild(wrap);
       });
     }
 
+    atualizarRanking();
     renderQuiz();
     initMemory();
     initBoard();
