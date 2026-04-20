@@ -3,185 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campeão de Segurança</title>
-
-<!-- biblioteca excel -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<title>Campeão da Segurança</title>
 
 <style>
 body{
-  margin:0;
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
-  text-align:center;
+font-family:Arial;
+background:#eef5fb;
+margin:0;
 }
 
-h1{margin-top:20px;}
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+color:#0b2e59;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
 
 button{
-  padding:12px 18px;
-  border:none;
-  border-radius:10px;
-  margin:5px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.primary{background:white;color:black;}
-.secondary{background:#22c55e;color:black;}
-.ghost{background:#475569;color:white;}
-
-.module{display:none;margin-top:20px;}
-.module.active{display:block;}
-
-.correct-effect{
-  animation:acerto 0.4s;
-}
-
-@keyframes acerto{
-  50%{background:#22c55e;color:white;transform:scale(1.1);}
-}
-
-.wrong-effect{
-  animation:erro 0.4s;
-}
-
-@keyframes erro{
-  25%{transform:translateX(-5px);}
-  50%{transform:translateX(5px);background:#ef4444;}
-}
-
-.ranking{
-  margin-top:20px;
+padding:12px;
+margin-top:10px;
+width:100%;
+border-radius:10px;
+border:none;
+background:#0b2e59;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 input{
-  padding:10px;
-  border-radius:10px;
-  border:none;
+padding:10px;
+width:100%;
+border-radius:10px;
+border:1px solid #ccc;
 }
+
+.hidden{display:none;}
+
+.correct{background:#c8f7c5;}
+.wrong{background:#f7c5c5;}
+
 </style>
 </head>
 
 <body>
 
-<h1>🏆 Campeão de Segurança</h1>
+<div class="container">
 
-<img src="mascotes-campeao.png" width="200">
+<h1>🏆 Campeão da Segurança</h1>
 
-<div style="margin-top:15px;">
-<input id="player-name" placeholder="Digite seu nome">
+<div class="card">
+<input id="nome" placeholder="Digite seu nome">
+<button onclick="iniciar()">Iniciar</button>
 </div>
 
-<div>
-<button class="primary" onclick="openModule('quiz')">Quiz</button>
-<button class="secondary" onclick="baixarExcel()">Excel</button>
-<button class="ghost" onclick="gerarCertificados()">Certificados</button>
+<div id="game" class="card hidden">
+<h3 id="faseTitulo"></h3>
+<p id="pergunta"></p>
+
+<div id="opcoes"></div>
+
+<p id="feedback"></p>
+
+<button onclick="proxima()">Próxima</button>
 </div>
 
-<!-- QUIZ -->
-<div id="quiz" class="module active">
-<h2>Pergunta</h2>
-<div id="question"></div>
-<div id="answers"></div>
-<h3 id="score">0</h3>
+<div id="final" class="card hidden">
+<h2>Resultado Final</h2>
+<p id="pontuacao"></p>
+<button onclick="enviar()">Enviar Ranking</button>
 </div>
 
-<!-- RANKING -->
-<div class="ranking" id="ranking"></div>
+<div class="card">
+<h3>Área Admin</h3>
+<input id="senha" placeholder="Senha">
+<button onclick="admin()">Entrar</button>
+<div id="ranking"></div>
+</div>
+
+</div>
 
 <script>
-let ranking = JSON.parse(localStorage.getItem('rankingRenaux')) || [];
+https://script.google.com/macros/s/AKfycbyvYm2PsTUeGDXbWx1wm0RgVhrHE2l4BKCEzAmea1NEaUEeiejXf106Hi3hL7SMXqdB0A/exec
 
-const quiz = [
-{q:"EPI é obrigatório?",a:["Sim","Não"],c:0},
-{q:"Atalho é seguro?",a:["Sim","Não"],c:1}
+let nome="";
+let pontos=0;
+let fase=0;
+let perguntaAtual=0;
+
+const fases = [
+
+{
+titulo:"Fase 1 - Empilhadeira",
+perguntas:[
+{
+pergunta:"Pedestre cruzando rota da empilhadeira. O que fazer?",
+opcoes:[
+{texto:"Parar e garantir segurança", correta:true},
+{texto:"Continuar operação", correta:false}
+]
+}
+]
+},
+
+{
+titulo:"Fase 2 - Prensa",
+perguntas:[
+{
+pergunta:"Proteção removida da máquina. Qual ação?",
+opcoes:[
+{texto:"Parar operação", correta:true},
+{texto:"Continuar produção", correta:false}
+]
+}
+]
+},
+
+{
+titulo:"Fase 3 - Comportamento Seguro",
+perguntas:[
+{
+pergunta:"Uso de celular em área operacional?",
+opcoes:[
+{texto:"Interromper e orientar", correta:true},
+{texto:"Ignorar", correta:false}
+]
+}
+]
+}
+
 ];
 
-let index=0;
-let score=0;
+function iniciar(){
+nome=document.getElementById("nome").value;
+if(!nome){alert("Digite o nome");return;}
 
-function openModule(id){
-document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));
-document.getElementById(id).classList.add('active');
+document.getElementById("game").classList.remove("hidden");
+mostrarPergunta();
 }
 
-function render(){
-document.getElementById("question").innerText=quiz[index].q;
+function mostrarPergunta(){
+let f=fases[fase];
+let p=f.perguntas[perguntaAtual];
+
+document.getElementById("faseTitulo").innerText=f.titulo;
+document.getElementById("pergunta").innerText=p.pergunta;
+
 let html="";
-quiz[index].a.forEach((a,i)=>{
-html+=`<button onclick="answer(${i},this)">${a}</button>`;
+p.opcoes.forEach((op,i)=>{
+html+=`<button onclick="responder(${op.correta})">${op.texto}</button>`;
 });
-document.getElementById("answers").innerHTML=html;
+
+document.getElementById("opcoes").innerHTML=html;
 }
 
-function answer(i,btn){
-if(i===quiz[index].c){
-score+=10;
-btn.classList.add("correct-effect");
+function responder(correta){
+if(correta){
+pontos+=10;
+document.getElementById("feedback").innerText="✔ Correto!";
 }else{
-btn.classList.add("wrong-effect");
+document.getElementById("feedback").innerText="❌ Errado!";
 }
-document.getElementById("score").innerText=score;
-
-setTimeout(()=>{
-index++;
-if(index>=quiz.length){
-salvar(score);
-index=0;
-score=0;
-}
-render();
-},800);
 }
 
-function salvar(pontos){
-const nome=document.getElementById("player-name").value || "Sem nome";
-ranking.push({nome,pontos});
-ranking.sort((a,b)=>b.pontos-a.pontos);
-localStorage.setItem("rankingRenaux",JSON.stringify(ranking));
-mostrarRanking();
+function proxima(){
+fase++;
+if(fase>=fases.length){
+finalizar();
+}else{
+mostrarPergunta();
+}
 }
 
-function mostrarRanking(){
-let html="<h2>Ranking</h2>";
-ranking.forEach((r,i)=>{
-html+=`<div>${i+1}º - ${r.nome} (${r.pontos})</div>`;
+function finalizar(){
+document.getElementById("game").classList.add("hidden");
+document.getElementById("final").classList.remove("hidden");
+document.getElementById("pontuacao").innerText="Pontuação: "+pontos;
+}
+
+async function enviar(){
+await fetch(API_URL,{
+method:"POST",
+body:JSON.stringify({
+action:"saveScore",
+nome:nome,
+pontuacao:pontos,
+acertos:pontos/10
+})
 });
+alert("Enviado com sucesso!");
+}
+
+async function admin(){
+let senha=document.getElementById("senha").value;
+
+let res=await fetch(API_URL+"?action=adminRanking&password="+senha);
+let data=await res.json();
+
+if(!data.ok){
+alert("Senha inválida");
+return;
+}
+
+let html="<h4>Ranking</h4>";
+
+data.ranking.forEach((r,i)=>{
+html+=`${i+1} - ${r.nome} (${r.pontuacao})<br>`;
+});
+
 document.getElementById("ranking").innerHTML=html;
 }
 
-function baixarExcel(){
-const dados=ranking.map((r,i)=>({
-Posicao:i+1,
-Nome:r.nome,
-Pontos:r.pontos
-}));
-const wb=XLSX.utils.book_new();
-const ws=XLSX.utils.json_to_sheet(dados);
-XLSX.utils.book_append_sheet(wb,ws,"Ranking");
-XLSX.writeFile(wb,"ranking.xlsx");
-}
-
-function gerarCertificados(){
-ranking.forEach(r=>{
-let w=window.open();
-w.document.write(`
-<h1>Certificado</h1>
-<img src="logo-renaux.png" width="150">
-<img src="mascotes-campeao.png" width="150">
-<p>Certificamos que <b>${r.nome}</b></p>
-<p>Pontuação: ${r.pontos}</p>
-`);
-});
-}
-
-render();
-mostrarRanking();
 </script>
 
 </body>
 </html>
-
-
