@@ -1,231 +1,1108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campeão da Segurança</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campeão da Segurança</title>
+  <style>
+    :root{
+      --azul:#0b2e59;
+      --azul2:#123f75;
+      --verde:#19a34a;
+      --verde2:#0f8b3b;
+      --cinza:#eef5fb;
+      --texto:#18324a;
+      --vermelho:#d93025;
+      --amarelo:#f4b400;
+      --branco:#fff;
+      --shadow:0 10px 25px rgba(11,46,89,.15);
+      --radius:20px;
+    }
 
-<style>
-body{
-font-family:Arial;
-background:#eef5fb;
-margin:0;
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#eaf3fb 0%, #f8fbff 100%);
+      color:var(--texto);
+    }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+    .app{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
+    }
 
-h1{
-color:#0b2e59;
-}
+    .hero{
+      background:linear-gradient(135deg,var(--azul),var(--azul2));
+      color:#fff;
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:20px;
+      align-items:center;
+    }
 
-.card{
-background:white;
-padding:20px;
-border-radius:15px;
-margin-top:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
+    .hero h1{
+      margin:0 0 8px;
+      font-size:clamp(30px,4vw,48px);
+    }
 
-button{
-padding:12px;
-margin-top:10px;
-width:100%;
-border-radius:10px;
-border:none;
-background:#0b2e59;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
+    .hero p{
+      margin:8px 0;
+      line-height:1.5;
+    }
 
-input{
-padding:10px;
-width:100%;
-border-radius:10px;
-border:1px solid #ccc;
-}
+    .hero-right{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:24px;
+      padding:16px;
+    }
 
-.hidden{display:none;}
+    .hero-right img.logo{
+      max-width:160px;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+    }
 
-.correct{background:#c8f7c5;}
-.wrong{background:#f7c5c5;}
+    .hero-right img.mascote{
+      max-width:220px;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+    }
 
-</style>
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-top:18px;
+      border:1px solid #e7eef6;
+    }
+
+    .card h2, .card h3{
+      margin-top:0;
+      color:var(--azul);
+    }
+
+    label{
+      display:block;
+      font-weight:bold;
+      margin-bottom:6px;
+      color:var(--azul);
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border:2px solid #d7e3ef;
+      border-radius:14px;
+      font-size:16px;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:var(--verde);
+      box-shadow:0 0 0 4px rgba(25,163,74,.12);
+    }
+
+    button{
+      border:none;
+      border-radius:14px;
+      padding:13px 16px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:15px;
+      transition:.2s;
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--verde),var(--verde2));
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:var(--azul);
+      color:#fff;
+    }
+
+    .btn-light{
+      background:#eef5fb;
+      color:var(--azul);
+      border:1px solid #d7e3ef;
+    }
+
+    .btn-danger{
+      background:var(--vermelho);
+      color:#fff;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .hud{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .hud-box{
+      background:#fff;
+      border:1px solid #e4edf5;
+      border-radius:18px;
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .hud-label{
+      font-size:12px;
+      text-transform:uppercase;
+      color:#687d92;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .hud-value{
+      font-size:28px;
+      font-weight:900;
+      color:var(--azul);
+      word-break:break-word;
+    }
+
+    .modules{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .module-card{
+      background:#fff;
+      border:1px solid #e4edf5;
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .module-card::before{
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0;
+      height:6px;
+      background:linear-gradient(90deg,var(--azul),var(--verde));
+    }
+
+    .module-card h3{
+      margin:0 0 10px;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:10px 0 14px;
+    }
+
+    .tag{
+      background:#eef5fb;
+      color:var(--azul);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .screen{display:none}
+    .screen.active{display:block}
+
+    .question-wrap{
+      background:#fff;
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      border:1px solid #e5edf5;
+      padding:20px;
+    }
+
+    .progress{
+      height:14px;
+      background:#e3edf7;
+      border-radius:999px;
+      overflow:hidden;
+      margin:10px 0 18px;
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--verde),#43c06b);
+      transition:.3s;
+    }
+
+    .scenario-tag{
+      display:inline-block;
+      background:#e8f5ec;
+      color:var(--verde2);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    .scenario-title{
+      font-size:28px;
+      color:var(--azul);
+      margin:0 0 12px;
+    }
+
+    .scenario-desc{
+      background:#f7fbff;
+      border:1px solid #e0ebf5;
+      border-radius:18px;
+      padding:16px;
+      line-height:1.6;
+      margin-bottom:12px;
+    }
+
+    .risk-box{
+      background:#fff7e6;
+      border:1px solid #ffe1a0;
+      border-left:6px solid var(--amarelo);
+      border-radius:18px;
+      padding:14px;
+      line-height:1.5;
+      margin-bottom:14px;
+    }
+
+    .question-title{
+      font-size:18px;
+      font-weight:900;
+      color:var(--azul);
+      margin-bottom:12px;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+    }
+
+    .option-btn{
+      text-align:left;
+      background:#fff;
+      border:2px solid #dce8f3;
+      color:var(--texto);
+      border-radius:16px;
+      padding:14px;
+      font-weight:800;
+    }
+
+    .option-btn.correct{
+      background:#ebfff2;
+      border-color:var(--verde);
+      color:#0d6a32;
+    }
+
+    .option-btn.error{
+      background:#fff1f0;
+      border-color:var(--vermelho);
+      color:#a32620;
+    }
+
+    .feedback{
+      display:none;
+      margin-top:14px;
+      border-radius:16px;
+      padding:14px;
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    .feedback.ok{
+      display:block;
+      background:#ebfff2;
+      color:#0f6d33;
+      border:1px solid #bde8ca;
+    }
+
+    .feedback.fail{
+      display:block;
+      background:#fff1f0;
+      color:#9f221c;
+      border:1px solid #efc1bd;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .completion{
+      text-align:center;
+      background:linear-gradient(135deg,#f3fff7,#eef8ff);
+      border:1px solid #dbeedf;
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+
+    .completion h2{
+      margin-top:0;
+      color:var(--azul);
+      font-size:32px;
+    }
+
+    .final-score{
+      font-size:42px;
+      font-weight:900;
+      color:var(--verde2);
+      margin:14px 0;
+      line-height:1.25;
+    }
+
+    .summary{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:16px;
+      text-align:left;
+    }
+
+    .summary-box{
+      background:#fff;
+      border:1px solid #e4edf5;
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .summary-k{
+      font-size:12px;
+      text-transform:uppercase;
+      font-weight:800;
+      color:#6a7f93;
+      margin-bottom:6px;
+    }
+
+    .summary-v{
+      font-size:20px;
+      font-weight:900;
+      color:var(--azul);
+    }
+
+    .admin-link{
+      background:none;
+      border:none;
+      color:#6e8397;
+      font-size:12px;
+      text-decoration:underline;
+      padding:6px;
+      margin-top:6px;
+      cursor:pointer;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    .ranking-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:12px;
+    }
+
+    .ranking-table th,
+    .ranking-table td{
+      padding:10px;
+      border-bottom:1px solid #e5edf5;
+      text-align:left;
+      font-size:13px;
+    }
+
+    .ranking-table th{
+      background:#f5f9fd;
+      color:var(--azul);
+    }
+
+    .top1{
+      background:#fff9e6;
+    }
+
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .modules{grid-template-columns:1fr}
+      .hud{grid-template-columns:repeat(2,1fr)}
+      .summary{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width: 520px){
+      .hud{grid-template-columns:1fr}
+      .summary{grid-template-columns:1fr}
+      .scenario-title{font-size:24px}
+    }
+  </style>
 </head>
-
 <body>
+  <div class="app">
 
-<div class="container">
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <div>
+          <h1>🏆 Campeão da Segurança</h1>
+          <p>Plataforma gamificada de SST com foco em percepção de risco, empilhadeira, prensa e comportamento seguro.</p>
+          <p>Os colaboradores acessam apenas as atividades. O ranking fica online e o acompanhamento é feito pela área admin.</p>
+        </div>
 
-<h1>🏆 Campeão da Segurança</h1>
+        <div class="hero-right">
+          <img src="logo-renaux.png" alt="Logo Renaux" class="logo" onerror="this.style.display='none';">
+          <img src="mascotes-campeao.png" alt="Mascotes" class="mascote" onerror="this.style.display='none';">
+        </div>
+      </div>
 
-<div class="card">
-<input id="nome" placeholder="Digite seu nome">
-<button onclick="iniciar()">Iniciar</button>
-</div>
+      <div class="grid-2">
+        <div class="card">
+          <h2>Identificação do Colaborador</h2>
+          <label for="nome">Digite seu nome</label>
+          <input id="nome" placeholder="Ex.: Flávia Valença">
+          <button class="btn-primary" onclick="salvarNome()">Salvar nome</button>
+          <p id="statusNome" style="margin-top:10px;color:#5d7287;">Nenhum colaborador identificado.</p>
+        </div>
 
-<div id="game" class="card hidden">
-<h3 id="faseTitulo"></h3>
-<p id="pergunta"></p>
+        <div class="card">
+          <h2>Painel</h2>
+          <div class="hud">
+            <div class="hud-box">
+              <div class="hud-label">Colaborador</div>
+              <div class="hud-value" id="hudNome">-</div>
+            </div>
+            <div class="hud-box">
+              <div class="hud-label">Pontuação</div>
+              <div class="hud-value" id="hudScore">0</div>
+            </div>
+            <div class="hud-box">
+              <div class="hud-label">Módulos</div>
+              <div class="hud-value" id="hudModules">0/3</div>
+            </div>
+            <div class="hud-box">
+              <div class="hud-label">Acertos</div>
+              <div class="hud-value" id="hudHits">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div id="opcoes"></div>
+      <div class="card">
+        <h2>Escolha um módulo</h2>
+        <div class="modules">
+          <div class="module-card">
+            <h3>🚜 Empilhadeira</h3>
+            <div class="tags">
+              <span class="tag">Atropelamento</span>
+              <span class="tag">Rotas</span>
+              <span class="tag">Visibilidade</span>
+            </div>
+            <p>Treine decisões seguras em circulação interna e interação com pedestres.</p>
+            <button class="btn-primary" onclick="startModule('empilhadeira')">Iniciar módulo</button>
+          </div>
 
-<p id="feedback"></p>
+          <div class="module-card">
+            <h3>🏭 Prensa</h3>
+            <div class="tags">
+              <span class="tag">Proteções</span>
+              <span class="tag">Parada</span>
+              <span class="tag">Prensamento</span>
+            </div>
+            <p>Reconheça controles essenciais para evitar corte e prensamento.</p>
+            <button class="btn-primary" onclick="startModule('prensa')">Iniciar módulo</button>
+          </div>
 
-<button onclick="proxima()">Próxima</button>
-</div>
+          <div class="module-card">
+            <h3>🦺 Comportamento Seguro</h3>
+            <div class="tags">
+              <span class="tag">EPI</span>
+              <span class="tag">Ergonomia</span>
+              <span class="tag">Cultura</span>
+            </div>
+            <p>Fortaleça a cultura de segurança com atitudes corretas no dia a dia.</p>
+            <button class="btn-primary" onclick="startModule('comportamento')">Iniciar módulo</button>
+          </div>
+        </div>
+      </div>
 
-<div id="final" class="card hidden">
-<h2>Resultado Final</h2>
-<p id="pontuacao"></p>
-<button onclick="enviar()">Enviar Ranking</button>
-</div>
+      <div style="text-align:center;">
+        <button class="admin-link" onclick="toggleAdmin()">Área administrativa</button>
+      </div>
 
-<div class="card">
-<h3>Área Admin</h3>
-<input id="senha" placeholder="Senha">
-<button onclick="admin()">Entrar</button>
-<div id="ranking"></div>
-</div>
+      <div id="adminCard" class="card hidden">
+        <h2>Área Admin</h2>
+        <label for="senhaAdmin">Senha admin</label>
+        <input id="senhaAdmin" type="password" placeholder="Digite a senha administrativa">
+        <div class="actions">
+          <button class="btn-secondary" onclick="adminLogin()">Entrar</button>
+          <button class="btn-light" onclick="adminRefresh()">Atualizar ranking</button>
+          <button class="btn-danger" onclick="adminClear()">Limpar ranking online</button>
+        </div>
+        <div id="rankingAdmin" style="margin-top:12px;"></div>
+      </div>
+    </section>
 
-</div>
+    <section id="gameScreen" class="screen">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;">
+          <strong id="moduleTitle">Módulo</strong>
+          <button class="btn-light" onclick="voltarInicio()">← Voltar</button>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div id="progressText" style="font-weight:800;color:var(--azul);font-size:13px;">Situação 1 de 3</div>
+      </div>
 
-<script>
-https://script.google.com/macros/s/AKfycbyvYm2PsTUeGDXbWx1wm0RgVhrHE2l4BKCEzAmea1NEaUEeiejXf106Hi3hL7SMXqdB0A/exec
+      <div class="question-wrap">
+        <div class="scenario-tag" id="scenarioTag">Tag</div>
+        <h2 class="scenario-title" id="scenarioTitle">Título</h2>
+        <div class="scenario-desc" id="scenarioDesc"></div>
+        <div class="risk-box" id="scenarioRisk"></div>
+        <div class="question-title" id="questionTitle">Qual é a melhor conduta?</div>
+        <div class="options" id="optionsBox"></div>
+        <div id="feedbackBox" class="feedback"></div>
 
-let nome="";
-let pontos=0;
-let fase=0;
-let perguntaAtual=0;
+        <div class="actions">
+          <button class="btn-secondary" id="nextBtn" onclick="nextQuestion()" disabled>Próxima</button>
+        </div>
+      </div>
+    </section>
 
-const fases = [
+    <section id="finalScreen" class="screen">
+      <div class="completion">
+        <h2>Missão concluída</h2>
+        <div class="final-score" id="finalScore">0 pontos</div>
 
-{
-titulo:"Fase 1 - Empilhadeira",
-perguntas:[
-{
-pergunta:"Pedestre cruzando rota da empilhadeira. O que fazer?",
-opcoes:[
-{texto:"Parar e garantir segurança", correta:true},
-{texto:"Continuar operação", correta:false}
-]
-}
-]
-},
+        <div class="summary">
+          <div class="summary-box">
+            <div class="summary-k">Colaborador</div>
+            <div class="summary-v" id="sumNome">-</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-k">Medalha</div>
+            <div class="summary-v" id="sumMedalha">-</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-k">Nível</div>
+            <div class="summary-v" id="sumNivel">-</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-k">Acertos</div>
+            <div class="summary-v" id="sumAcertos">0</div>
+          </div>
+        </div>
 
-{
-titulo:"Fase 2 - Prensa",
-perguntas:[
-{
-pergunta:"Proteção removida da máquina. Qual ação?",
-opcoes:[
-{texto:"Parar operação", correta:true},
-{texto:"Continuar produção", correta:false}
-]
-}
-]
-},
+        <div class="actions" style="justify-content:center;margin-top:20px;">
+          <button class="btn-primary" onclick="saveToRanking()">Enviar resultado</button>
+          <button class="btn-light" onclick="resetGame()">Jogar novamente</button>
+          <button class="btn-light" onclick="voltarInicio()">Voltar ao início</button>
+        </div>
+      </div>
+    </section>
 
-{
-titulo:"Fase 3 - Comportamento Seguro",
-perguntas:[
-{
-pergunta:"Uso de celular em área operacional?",
-opcoes:[
-{texto:"Interromper e orientar", correta:true},
-{texto:"Ignorar", correta:false}
-]
-}
-]
-}
+  </div>
 
-];
+  <script>
+   const API_URL = "https://script.google.com/macros/s/AKfycbvyYm2PsTUeGDXbWx1wm0RgVhrHE2l4BKCEzAmea1NEaUEeiejXf106Hi3hL7SMXqdB0A/exec";
 
-function iniciar(){
-nome=document.getElementById("nome").value;
-if(!nome){alert("Digite o nome");return;}
+    const modules = {
+      empilhadeira: {
+        title: "Módulo: Empilhadeira",
+        questions: [
+          {
+            tag: "Atropelamento",
+            title: "Pedestre atravessando a rota",
+            desc: "Durante a movimentação interna, um colaborador atravessa próximo à empilhadeira em movimento.",
+            risk: "Risco SST: atropelamento em rota de circulação mista.",
+            question: "Qual conduta é mais segura?",
+            options: [
+              { text: "Reduzir, parar se necessário e reforçar o uso das faixas de pedestres.", correct: true, feedback: "Correto. Controle do equipamento e segregação de fluxo são essenciais." },
+              { text: "Buzinar e seguir normalmente.", correct: false, feedback: "Incorreto. A buzina não substitui o controle efetivo do risco." },
+              { text: "Continuar porque o pedestre deve sair da frente.", correct: false, feedback: "Incorreto. A prioridade é eliminar o risco imediato." }
+            ]
+          },
+          {
+            tag: "Visibilidade",
+            title: "Carga com visibilidade reduzida",
+            desc: "A carga paletizada reduz a visão frontal do operador em um trajeto com cruzamentos.",
+            risk: "Risco SST: colisão e atropelamento por perda de visibilidade.",
+            question: "Qual é a decisão correta?",
+            options: [
+              { text: "Ajustar a operação para garantir visibilidade segura e atenção reforçada.", correct: true, feedback: "Correto. A forma de deslocamento deve preservar controle e segurança." },
+              { text: "Manter a mesma forma de operação para não atrasar.", correct: false, feedback: "Incorreto. Pressa aumenta o risco." },
+              { text: "Pedir que alguém caminhe na frente o tempo todo.", correct: false, feedback: "Incorreto. Não se deve expor outra pessoa desnecessariamente." }
+            ]
+          },
+          {
+            tag: "Rotas Seguras",
+            title: "Circulação fora da faixa",
+            desc: "Um colaborador sai da faixa de pedestres por estar com pressa em área com fluxo misto.",
+            risk: "Risco SST: atropelamento por circulação fora da rota segura.",
+            question: "Qual orientação deve prevalecer?",
+            options: [
+              { text: "Usar as faixas destinadas à locomoção e manter atenção constante.", correct: true, feedback: "Correto. Rotas segregadas são medida básica de prevenção." },
+              { text: "Ignorar a rota quando não houver empilhadeira visível.", correct: false, feedback: "Incorreto. A disciplina precisa ser contínua." },
+              { text: "Permitir o atalho em caso de pressa.", correct: false, feedback: "Incorreto. Pressa aumenta a exposição." }
+            ]
+          }
+        ]
+      },
 
-document.getElementById("game").classList.remove("hidden");
-mostrarPergunta();
-}
+      prensa: {
+        title: "Módulo: Prensa",
+        questions: [
+          {
+            tag: "Prensamento",
+            title: "Proteção removida",
+            desc: "A proteção da prensa foi retirada temporariamente para agilizar a produção.",
+            risk: "Risco SST: corte e prensamento por supressão de proteção.",
+            question: "Qual decisão é correta?",
+            options: [
+              { text: "Interromper a atividade e restabelecer a proteção antes de operar.", correct: true, feedback: "Correto. A operação só pode acontecer com proteção íntegra." },
+              { text: "Permitir por pouco tempo.", correct: false, feedback: "Incorreto. Não existe atalho seguro sem proteção." },
+              { text: "Autorizar apenas para operadores experientes.", correct: false, feedback: "Incorreto. Experiência não substitui proteção coletiva." }
+            ]
+          },
+          {
+            tag: "Emergência",
+            title: "Botão de parada com falha",
+            desc: "No checklist, o operador percebe funcionamento duvidoso da parada de emergência.",
+            risk: "Risco SST: falha crítica em dispositivo de controle.",
+            question: "O que deve ser feito?",
+            options: [
+              { text: "Bloquear o uso do equipamento e acionar manutenção.", correct: true, feedback: "Correto. Dispositivo crítico com falha impede a operação." },
+              { text: "Operar com mais cautela.", correct: false, feedback: "Incorreto. Cautela não substitui controle funcional." },
+              { text: "Avisar a equipe e seguir.", correct: false, feedback: "Incorreto. Comunicação sem bloqueio não elimina o risco." }
+            ]
+          },
+          {
+            tag: "Intervenção",
+            title: "Peça travada na zona de perigo",
+            desc: "Uma peça ficou presa e o operador pensa em alcançar rapidamente a área sem desligar a máquina.",
+            risk: "Risco SST: amputação, corte ou prensamento ao acessar zona de perigo.",
+            question: "Qual é a conduta segura?",
+            options: [
+              { text: "Não acessar a zona de risco sem condição segura e procedimento definido.", correct: true, feedback: "Correto. Intervenção exige parada segura e método definido." },
+              { text: "Retirar rapidamente com a mão.", correct: false, feedback: "Incorreto. É uma situação clássica de acidente grave." },
+              { text: "Pedir para alguém observar enquanto ele retira.", correct: false, feedback: "Incorreto. Observação não elimina o risco mecânico." }
+            ]
+          }
+        ]
+      },
 
-function mostrarPergunta(){
-let f=fases[fase];
-let p=f.perguntas[perguntaAtual];
+      comportamento: {
+        title: "Módulo: Comportamento Seguro",
+        questions: [
+          {
+            tag: "EPI",
+            title: "Entrada em área ruidosa sem proteção",
+            desc: "Um colaborador entra na área ruidosa sem o protetor auricular adequado porque ficará pouco tempo no local.",
+            risk: "Risco SST: exposição indevida ao ruído por falha de comportamento seguro.",
+            question: "Qual conduta deve prevalecer?",
+            options: [
+              { text: "Interromper a exposição e orientar o uso correto do EPI.", correct: true, feedback: "Correto. Tempo curto não justifica exposição sem proteção." },
+              { text: "Liberar, pois será rápido.", correct: false, feedback: "Incorreto. Exposição indevida continua sendo exposição." },
+              { text: "Deixar entrar apenas desta vez.", correct: false, feedback: "Incorreto. Exceções fragilizam a cultura de segurança." }
+            ]
+          },
+          {
+            tag: "Ergonomia",
+            title: "Postura inadequada repetitiva",
+            desc: "Durante a rotina, o trabalhador permanece em postura desconfortável sem ajuste do posto e sem pausas.",
+            risk: "Risco SST: sobrecarga ergonômica e desconforto progressivo.",
+            question: "Qual medida ajuda a prevenir esse risco?",
+            options: [
+              { text: "Ajustar o posto, orientar ergonomia e realizar pausas quando aplicável.", correct: true, feedback: "Correto. Adaptação e orientação reduzem a exposição ergonômica." },
+              { text: "Acelerar o trabalho para terminar logo.", correct: false, feedback: "Incorreto. Pressa não reduz o risco." },
+              { text: "Ignorar porque não é um acidente imediato.", correct: false, feedback: "Incorreto. Risco ergonômico também precisa de controle." }
+            ]
+          },
+          {
+            tag: "Disciplina",
+            title: "Atalho comportamental",
+            desc: "Um colaborador decide pular uma orientação rápida antes da atividade porque já fez aquela tarefa várias vezes.",
+            risk: "Risco SST: excesso de confiança e enfraquecimento da disciplina operacional.",
+            question: "Qual é a postura correta?",
+            options: [
+              { text: "Manter a orientação e a rotina segura mesmo em tarefas conhecidas.", correct: true, feedback: "Correto. Rotina conhecida não elimina a necessidade de disciplina." },
+              { text: "Liberar, pois a experiência dele compensa.", correct: false, feedback: "Incorreto. Experiência não substitui rotina segura." },
+              { text: "Permitir quando a produção estiver apertada.", correct: false, feedback: "Incorreto. Produção não justifica atalho inseguro." }
+            ]
+          }
+        ]
+      }
+    };
 
-document.getElementById("faseTitulo").innerText=f.titulo;
-document.getElementById("pergunta").innerText=p.pergunta;
+    const state = {
+      playerName: "",
+      score: 0,
+      hits: 0,
+      answered: false,
+      currentModule: null,
+      currentQuestion: 0,
+      completedModules: [],
+      sent: false
+    };
 
-let html="";
-p.opcoes.forEach((op,i)=>{
-html+=`<button onclick="responder(${op.correta})">${op.texto}</button>`;
-});
+    let adminPasswordSession = "";
 
-document.getElementById("opcoes").innerHTML=html;
-}
+    function $(id){ return document.getElementById(id); }
 
-function responder(correta){
-if(correta){
-pontos+=10;
-document.getElementById("feedback").innerText="✔ Correto!";
-}else{
-document.getElementById("feedback").innerText="❌ Errado!";
-}
-}
+    function showScreen(id){
+      ["homeScreen","gameScreen","finalScreen"].forEach(screen => $(screen).classList.remove("active"));
+      $(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
-function proxima(){
-fase++;
-if(fase>=fases.length){
-finalizar();
-}else{
-mostrarPergunta();
-}
-}
+    function salvarNome(){
+      const nome = $("nome").value.trim();
+      if(!nome){
+        alert("Digite o nome do colaborador.");
+        return;
+      }
+      state.playerName = nome;
+      $("statusNome").innerText = "Colaborador identificado com sucesso.";
+      renderHUD();
+    }
 
-function finalizar(){
-document.getElementById("game").classList.add("hidden");
-document.getElementById("final").classList.remove("hidden");
-document.getElementById("pontuacao").innerText="Pontuação: "+pontos;
-}
+    function renderHUD(){
+      $("hudNome").innerText = state.playerName || "-";
+      $("hudScore").innerText = state.score;
+      $("hudModules").innerText = `${state.completedModules.length}/3`;
+      $("hudHits").innerText = state.hits;
+    }
 
-async function enviar(){
-await fetch(API_URL,{
-method:"POST",
-body:JSON.stringify({
-action:"saveScore",
-nome:nome,
-pontuacao:pontos,
-acertos:pontos/10
-})
-});
-alert("Enviado com sucesso!");
-}
+    function startModule(moduleKey){
+      if(!state.playerName){
+        alert("Antes de iniciar, digite o nome do colaborador.");
+        $("nome").focus();
+        return;
+      }
 
-async function admin(){
-let senha=document.getElementById("senha").value;
+      state.currentModule = moduleKey;
+      state.currentQuestion = 0;
+      state.answered = false;
 
-let res=await fetch(API_URL+"?action=adminRanking&password="+senha);
-let data=await res.json();
+      renderQuestion();
+      showScreen("gameScreen");
+    }
 
-if(!data.ok){
-alert("Senha inválida");
-return;
-}
+    function renderQuestion(){
+      const module = modules[state.currentModule];
+      const q = module.questions[state.currentQuestion];
 
-let html="<h4>Ranking</h4>";
+      $("moduleTitle").innerText = module.title;
+      $("scenarioTag").innerText = q.tag;
+      $("scenarioTitle").innerText = q.title;
+      $("scenarioDesc").innerText = q.desc;
+      $("scenarioRisk").innerHTML = `<strong>Base preventiva:</strong> ${q.risk}`;
+      $("questionTitle").innerText = q.question;
+      $("feedbackBox").className = "feedback";
+      $("feedbackBox").innerText = "";
+      $("nextBtn").disabled = true;
 
-data.ranking.forEach((r,i)=>{
-html+=`${i+1} - ${r.nome} (${r.pontuacao})<br>`;
-});
+      const percent = Math.round((state.currentQuestion / module.questions.length) * 100);
+      $("progressBar").style.width = percent + "%";
+      $("progressText").innerText = `Situação ${state.currentQuestion + 1} de ${module.questions.length}`;
 
-document.getElementById("ranking").innerHTML=html;
-}
+      $("optionsBox").innerHTML = "";
 
-</script>
+      q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerHTML = `<strong>${String.fromCharCode(65+index)}.</strong> ${option.text}`;
+        btn.onclick = () => selectOption(btn, option.correct, option.feedback, q.options);
+        $("optionsBox").appendChild(btn);
+      });
+    }
 
+    function selectOption(button, isCorrect, feedback, allOptions){
+      if(state.answered) return;
+      state.answered = true;
+
+      const buttons = document.querySelectorAll(".option-btn");
+      buttons.forEach(btn => btn.disabled = true);
+
+      if(isCorrect){
+        state.score += 10;
+        state.hits += 1;
+        button.classList.add("correct");
+        $("feedbackBox").className = "feedback ok";
+        $("feedbackBox").innerText = "✔ " + feedback;
+      }else{
+        button.classList.add("error");
+        $("feedbackBox").className = "feedback fail";
+        $("feedbackBox").innerText = "❌ " + feedback;
+
+        allOptions.forEach((opt, idx) => {
+          if(opt.correct && buttons[idx]){
+            buttons[idx].classList.add("correct");
+          }
+        });
+      }
+
+      $("nextBtn").disabled = false;
+      renderHUD();
+    }
+
+    function nextQuestion(){
+      const module = modules[state.currentModule];
+      state.currentQuestion++;
+      state.answered = false;
+
+      if(state.currentQuestion >= module.questions.length){
+        finishModule();
+        return;
+      }
+
+      renderQuestion();
+    }
+
+    function finishModule(){
+      if(!state.completedModules.includes(state.currentModule)){
+        state.completedModules.push(state.currentModule);
+      }
+
+      renderHUD();
+
+      if(state.completedModules.length === 3){
+        finishGame();
+      } else {
+        alert("Módulo concluído. Escolha o próximo.");
+        showScreen("homeScreen");
+      }
+    }
+
+    function finishGame(){
+      $("finalScore").innerHTML = `${state.score} pontos`;
+      $("sumNome").innerText = state.playerName;
+      $("sumMedalha").innerText = getMedal(state.score);
+      $("sumNivel").innerText = getLevel(state.score);
+      $("sumAcertos").innerText = state.hits;
+      showScreen("finalScreen");
+    }
+
+    function resetGame(){
+      state.score = 0;
+      state.hits = 0;
+      state.currentModule = null;
+      state.currentQuestion = 0;
+      state.answered = false;
+      state.completedModules = [];
+      state.sent = false;
+      renderHUD();
+      showScreen("homeScreen");
+    }
+
+    function voltarInicio(){
+      showScreen("homeScreen");
+    }
+
+    function getMedal(score){
+      if(score >= 70) return "🥇 OURO";
+      if(score >= 50) return "🥈 PRATA";
+      return "🥉 BRONZE";
+    }
+
+    function getLevel(score){
+      if(score >= 70) return "Campeão da Segurança";
+      if(score >= 50) return "Intermediário";
+      return "Iniciante";
+    }
+
+    async function saveToRanking(){
+      if(state.sent){
+        alert("Esse resultado já foi enviado.");
+        return;
+      }
+
+      if(!API_URL || API_URL.includes("COLE_AQUI")){
+        alert("Você ainda não configurou a URL do Web App no index.html.");
+        return;
+      }
+
+      try{
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "saveScore",
+            nome: state.playerName,
+            pontuacao: state.score,
+            acertos: state.hits,
+            medalha: getMedal(state.score),
+            nivel: getLevel(state.score),
+            origem: "Campeao da Seguranca"
+          })
+        });
+
+        const result = await response.json();
+
+        if(!result.ok){
+          alert(result.message || "Erro ao salvar ranking online.");
+          return;
+        }
+
+        state.sent = true;
+        alert("Resultado enviado para o ranking online com sucesso.");
+      }catch(e){
+        alert("Erro ao enviar resultado para o ranking online.");
+      }
+    }
+
+    function toggleAdmin(){
+      $("adminCard").classList.toggle("hidden");
+    }
+
+    async function adminLogin(){
+      const password = $("senhaAdmin").value.trim();
+
+      if(!password){
+        alert("Digite a senha admin.");
+        return;
+      }
+
+      if(!API_URL || API_URL.includes("COLE_AQUI")){
+        alert("Você ainda não configurou a URL do Web App no index.html.");
+        return;
+      }
+
+      try{
+        const response = await fetch(`${API_URL}?action=adminRanking&password=${encodeURIComponent(password)}`);
+        const data = await response.json();
+
+        if(!data.ok){
+          alert(data.message || "Senha inválida.");
+          return;
+        }
+
+        adminPasswordSession = password;
+        renderAdminRanking(data.ranking || []);
+        alert("Painel administrativo liberado.");
+      }catch(e){
+        alert("Erro ao acessar o painel admin.");
+      }
+    }
+
+    async function adminRefresh(){
+      if(!adminPasswordSession){
+        alert("Faça login primeiro na área admin.");
+        return;
+      }
+
+      try{
+        const response = await fetch(`${API_URL}?action=adminRanking&password=${encodeURIComponent(adminPasswordSession)}`);
+        const data = await response.json();
+
+        if(!data.ok){
+          alert(data.message || "Erro ao atualizar ranking.");
+          return;
+        }
+
+        renderAdminRanking(data.ranking || []);
+      }catch(e){
+        alert("Erro ao atualizar ranking online.");
+      }
+    }
+
+    async function adminClear(){
+      if(!adminPasswordSession){
+        alert("Faça login primeiro na área admin.");
+        return;
+      }
+
+      const ok = confirm("Deseja realmente limpar o ranking online?");
+      if(!ok) return;
+
+      try{
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "clearRanking",
+            password: adminPasswordSession
+          })
+        });
+
+        const data = await response.json();
+
+        if(!data.ok){
+          alert(data.message || "Erro ao limpar ranking.");
+          return;
+        }
+
+        renderAdminRanking([]);
+        alert("Ranking online limpo com sucesso.");
+      }catch(e){
+        alert("Erro ao limpar ranking online.");
+      }
+    }
+
+    function renderAdminRanking(ranking){
+      if(!ranking.length){
+        $("rankingAdmin").innerHTML = `<p style="color:#667b90;">Nenhum resultado registrado ainda.</p>`;
+        return;
+      }
+
+      let html = `
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Pontos</th>
+              <th>Acertos</th>
+              <th>Medalha</th>
+              <th>Nível</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      ranking.forEach((item,index) => {
+        const pos = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1;
+        html += `
+          <tr class="${index===0 ? "top1" : ""}">
+            <td><strong>${pos}</strong></td>
+            <td>${item.nome}</td>
+            <td><strong>${item.pontuacao}</strong></td>
+            <td>${item.acertos}</td>
+            <td>${item.medalha || "-"}</td>
+            <td>${item.nivel || "-"}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      $("rankingAdmin").innerHTML = html;
+    }
+
+    renderHUD();
+  </script>
 </body>
 </html>
